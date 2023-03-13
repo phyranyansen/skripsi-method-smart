@@ -49,6 +49,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'dashboard';
+
+//Pariwisata
+$route['pariwisata']         = 'pariwisata';
+$route['list-wisata']        = 'pariwisata/get';
+$route['tambah-wisata']      = 'pariwisata/add';
+$route['upload-wisata']      = 'pariwisata/upload';
+$route['hapus-wisata']       = 'pariwisata/delete';
+$route['delete-wisata']      = 'pariwisata/delete_all';
+
+//Kriteria
+$route['kriteria']           = 'kriteria';
+$route['tambah-kriteria']    = 'kriteria/add';
+$route['hapus-kriteria']     = 'kriteria/delete';
+
+
+//Method
+$route['method']             = 'method';
+$route['konversi-get']       = 'method/konversi';
+$route['result']             = 'method/get_result';
+//Bobot
+$route['bobot-get']          = 'method/bobot';
+$route['bobot-normalisasi']  = 'method/bobot_normalisasi';
+$route['bobot-value']        = 'method/showing_bobot_value';
+
+//Utility
+$route['utility-get']        = 'method/get_utility';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
