@@ -14,6 +14,12 @@ class Method_model extends CI_Model {
         return $query->row_array();
     }
 
+    function update_bobot($table, $where, $data)
+    {
+       $this->db->where($where);
+       $this->db->update($table, $data);
+    }
+
     //GET Select Bobot
     function get_select_bobot()
     {
@@ -215,7 +221,6 @@ class Method_model extends CI_Model {
 
 
     
-
     //INSERT KONVERSI
     function save_konversi($random=null)
     {
@@ -279,6 +284,8 @@ class Method_model extends CI_Model {
       
     }
 
+
+
     private function jarak($jarak) {
         if ($jarak >= 15 && $jarak <= 20) {
           return 5;
@@ -316,10 +323,10 @@ class Method_model extends CI_Model {
         }
       }
 
-      private function jam($jam) {
+    private function jam($jam) {
         $skor = 0;
         
-        if ($jam >= 7 && $jam <= 10) {
+        if ($jam >= 7 && $jam <= 10 || $jam==24) {
             $skor = 4;
         } elseif ($jam >= 11 && $jam <= 14) {
             $skor = 3;
@@ -331,4 +338,6 @@ class Method_model extends CI_Model {
         
         return $skor;
     }
+
+
 }

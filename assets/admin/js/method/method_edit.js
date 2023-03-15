@@ -1,37 +1,37 @@
 //GANTI BOBOT
-// $(document).ready(function(){
-//     $(document).on('click', '#ganti-bobot', function() {
-//         var id = $(this).attr('data-bobot');
-//         $.ajax({
-//             url     : 'edit-bobot',
-//             method  : 'GET',
-//             data    : { id_bobot : id },
-//             success : function(data){
-//                 var msg = JSON.parse(data);
-//                 if(msg.statusCode==200)
-//                 {
-//                     Swal.fire('Sukses!', msg.pesan, 'success');
-//                 }else{
-//                     Swal.fire('Failed!', msg.pesan, 'error');
+$(document).ready(function() {
+  $('#edit-bobot').submit(function(e) {
+      $.ajax({
+          url : "bobot-edit",
+          type: "POST",
+          data: new FormData(this),
+          processData: false,
+          contentType: false,
+          cache: false,
+          success : function(data) {
+              var msg = JSON.parse(data);
+              if(msg.statusCode==200)
+              {
+                  Swal.fire('Sukses!', msg.pesan, 'success');
+                 
+              }else{
+                  Swal.fire('Failed!', msg.pesan, 'error');
+              }
+          },
+          error : function(data) {
+              Swal.fire('Failed!', 'Something went wrong!', 'error');
+          }
+      })
+      e.preventDefault();
+  })
 
-//                 }
-//             },
-
-//             error  : function(data){
-//                 Swal.fire('Oops!', 'Something went wrong!', 'error');
-//             }
-
-//         })
-
-//     })
-// })
+});
 
 
 //CHANGE BOBOT VALUE ON FIELD
-  
 $(function(){
     $("#kriteria").change(function(){
-       var kode = $('#kriteria').val();
+       var kode = this.value;
        if(kode!='0'){
          $.ajax({
              url: 'bobot-value',
@@ -40,8 +40,6 @@ $(function(){
              success: function(data) {
                var msg = JSON.parse(data);
                  $('#value').val(msg.bobot);
-                 
-                 // $('#sub_total').val(subtotal);
             
              }
          });

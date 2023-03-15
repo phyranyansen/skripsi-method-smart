@@ -10,7 +10,6 @@ $(document).ready(function () {
             "info": true,
             "autoWidth": false,
             "responsive": true,
-            "buttons": ["copy", "excel"]
-        }).buttons().container().appendTo('#wisata_wrapper .col-md-6:eq(0) ');
+        });
     
  });

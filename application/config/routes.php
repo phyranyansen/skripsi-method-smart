@@ -71,6 +71,7 @@ $route['konversi-get']       = 'method/konversi';
 $route['result']             = 'method/get_result';
 //Bobot
 $route['bobot-get']          = 'method/bobot';
+$route['bobot-edit']         = 'method/edit_bobot';
 $route['bobot-normalisasi']  = 'method/bobot_normalisasi';
 $route['bobot-value']        = 'method/showing_bobot_value';
 

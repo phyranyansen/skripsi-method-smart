@@ -10,18 +10,18 @@
                                  <div class="modal-body">
                                       <div class="form-group">
                                               <label>Value</label>
-                                              <select class="select2 form-control mb-3 custom-select" style="width: 100%; height:36px; background-color:lightsalmon" id="kriteria">
-                                                <optgroup label="Select">
+                                              <select class="select2 form-control mb-3 custom-select" name="id_kriteria" style="width: 100%; height:36px; background-color:lightsalmon" id="kriteria">
+                                                  <option value="0">Pilih</option>
                                                   <?php foreach($bobot as $row){ ?>
                                                     <option value="<?= $row['Id_Kriteria']; ?>"><?= $row['Nama_Kriteria']; ?></option>
                                                     <?php } ?>
-                                                </optgroup>
+                                              
                                             </select>
                                       </div>
                                       <div class="form-group">
                                               <label>Value</label>
                                                 <div>
-                                                  <input type="number" class="form-control" required placeholder="0.00" id="value"/>
+                                                  <input type="number" name="bobot" class="form-control" required placeholder="0.00" id="value"/>
                                             </div>
                                       </div>
                                 </div>

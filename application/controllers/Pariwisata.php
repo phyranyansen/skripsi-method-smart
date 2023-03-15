@@ -145,7 +145,7 @@ public function upload()
                     "statusCode" =>200,
                     "pesan"      =>"Upload data berhasil!"
                 ));
-                // unlink('./assets/admin/tmp_doc/' . $file['file_name']);
+               
             }else{
                 echo json_encode(array(
                     "statusCode" =>400,
