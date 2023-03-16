@@ -190,17 +190,17 @@ class Method extends CI_Controller {
                     $html .= '</tr>';
                     $no++;
      }
-                  $html .= '<tr>';
-                  $html .= '<th colspan="3">Nilai Tertinggi (MAX)</th>';
-                  $html .= '<th>'.$max1.'</th>';
-                  $html .= '<th>'.$max2.'</th>';
-                  $html .= '</tr>';
+                  // $html .= '<tr>';
+                  // $html .= '<th colspan="3">Nilai Tertinggi (MAX)</th>';
+                  // $html .= '<th>'.$max1.'</th>';
+                  // $html .= '<th>'.$max2.'</th>';
+                  // $html .= '</tr>';
 
-                  $html .= '<tr>';
-                  $html .= '<th colspan="3">Nilai Terendah (MIN)</th>';
-                  $html .= '<th>'.$min1.'</th>';
-                  $html .= '<th>'.$min2.'</th>';
-                  $html .= '</tr>';
+                  // $html .= '<tr>';
+                  // $html .= '<th colspan="3">Nilai Terendah (MIN)</th>';
+                  // $html .= '<th>'.$min1.'</th>';
+                  // $html .= '<th>'.$min2.'</th>';
+                  // $html .= '</tr>';
                   
       echo $html;
     }

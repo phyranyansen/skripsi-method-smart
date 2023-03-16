@@ -120,14 +120,7 @@
                              <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-clipboard-outline"></i><span> Laporan </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="form-elements.html">Laporan Penjualan</a></li>
-                                    <li><a href="form-validation.html">Laporan</a></li>
-                                    <li><a href="form-advanced.html">Form Advanced</a></li>
-                                    <li><a href="form-editors.html">Form Editors</a></li>
-                                    <li><a href="form-uploads.html">Form File Upload</a></li>
-                                    <li><a href="form-mask.html">Form Mask</a></li>
-                                    <li><a href="form-summernote.html">Summernote</a></li>
-                                    <li><a href="form-xeditable.html">Form Xeditable</a></li>
+                                    <li><a href="laporan">Daftar Laporan</a></li>
                                 </ul>
                             </li>
                           

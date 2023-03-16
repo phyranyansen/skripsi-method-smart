@@ -15,6 +15,7 @@ class Pariwisata_model extends CI_Model {
         return $query;
     }
 
+
     function save($data)
     {
         $this->db->insert('pariwisata', $data);

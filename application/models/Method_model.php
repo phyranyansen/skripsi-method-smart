@@ -150,21 +150,40 @@ class Method_model extends CI_Model {
   } 
   
 
-
-    private function utility($out, $min, $max)
-    {
-          // Menghitung hasil rumus
-          $hasil_rumus = ($out - $min) / ($max - $min);
     
-          // Memastikan hasil rumus tidak menghasilkan error (divisi oleh nol)
-          if (!is_nan($hasil_rumus) && !is_infinite($hasil_rumus)) {
-              $nilai = $hasil_rumus;
-          } else {
-              $nilai = 0;
-          }
+  private function utility($out, $min, $max)
+  {
+      // Menambahkan pengecekan untuk memastikan nilai $max - $min tidak sama dengan 0
+      if ($max - $min == 0) {
+          return 0;
+      }
+      // Menghitung hasil rumus
+      $hasil_rumus = ($out - $min) / ($max - $min);
+  
+      // Memastikan hasil rumus tidak menghasilkan error (divisi oleh nol)
+      if (!is_nan($hasil_rumus) && !is_infinite($hasil_rumus)) {
+          $nilai = $hasil_rumus;
+      } else {
+          $nilai = 0;
+      }
+  
+      return $nilai;
+  }
 
-          return $nilai;
-    }
+    // private function utility($out, $min, $max)
+    // {
+    //       // Menghitung hasil rumus
+    //       $hasil_rumus = ($out - $min) / ($max - $min);
+    
+    //       // Memastikan hasil rumus tidak menghasilkan error (divisi oleh nol)
+    //       if (!is_nan($hasil_rumus) && !is_infinite($hasil_rumus)) {
+    //           $nilai = $hasil_rumus;
+    //       } else {
+    //           $nilai = 0;
+    //       }
+
+    //       return $nilai;
+    // }
 
 
     //GET END OFF RESULT PROCCESS

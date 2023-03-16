@@ -35,7 +35,7 @@
                                                 buttons on a page that will interact with a DataTable. The core library
                                                 provides the based framework upon which plug-ins can built.
                                             </p>
-                                            <div style="width:100%;height:700px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
+                                            <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
                                             <table id="wisata"  class="table table-bordered">
                                                 <thead style="background-color: whitesmoke;">
                                                 <tr>
@@ -51,14 +51,16 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                  <?php $no=1; foreach($list as $row) { ?>
+                                                  <?php $no=1; foreach($list as $row) {
+                                                    $explode_harga = explode('- ', $row['Tiket_Masuk']);
+                                                    ?>
                                                 <tr>
                                                     <td><?= $no++; ?></td>
                                                     <td><?= $row['Kode_Pariwisata'] ?></td>
                                                     <td><?= $row['Nama_Pariwisata'] ?></td>
                                                     <td><?= $row['Jarak'] ?> Km</td>
-                                                    <td><?= $row['Tiket_Masuk'] ?></td>
-                                                    <td><?= $row['Jam_Operasional'] ?></td>
+                                                    <td style="width: 200px;"><?php if(!empty($explode_harga[0])){ echo 'Rp '.number_format($explode_harga[0], 0); } if(!empty($explode_harga[1])){ echo ' - '.number_format($explode_harga[1], 0);} ?></td>
+                                                    <td>Jam <?= $row['Jam_Operasional'] ?></td>
                                                     <td><?= $row['Aksebility'] ?></td>
                                                     <td><?= $row['Fasilitas'] ?></td>
                                                     <th style="text-align: center; width: 10%;">

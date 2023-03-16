@@ -29,7 +29,7 @@
                                                 <!-- Tab Alternatif -->
                                                 <div class="tab-content">
                                                     <div class="tab-pane active p-3" id="alternatif" role="tabpanel">
-                                                    <div style="width:100%;height:600px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
+                                                    <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
                                                         <table  class="table table-bordered">
                                                             <thead>
                                                             <tr>
@@ -49,14 +49,17 @@
                                                             <tbody>
                                                               <?php
                                                               if(!empty($alternatif)){
-                                                              $no=1; foreach($alternatif as $row){ ?>
+                                                              $no=1; 
+                                                              foreach($alternatif as $row){
+                                                                $explode_harga = explode('- ', $row['Tiket_Masuk']);
+                                                                ?>
                                                                 <tr>
                                                                 <td><?= $no++; ?>.</td>
                                                                 <td><?= $row['Kode_Pariwisata'] ?></td>
                                                                 <td><?= $row['Nama_Pariwisata'] ?></td>
                                                                 <td><?= $row['Jarak'] ?> Km</td>
-                                                                <td><?= $row['Tiket_Masuk'] ?></td>
-                                                                <td><?= $row['Jam_Operasional'] ?></td>
+                                                                <td style="width: 200px;"><?php if(!empty($explode_harga[0])){ echo 'Rp '.number_format($explode_harga[0], 0); } if(!empty($explode_harga[1])){ echo ' - '.number_format($explode_harga[1], 0);} ?></td>
+                                                                <td>Jam <?= $row['Jam_Operasional'] ?></td>
                                                                 <td><?= $row['Aksebility'] ?></td>
                                                                 <td><?= $row['Fasilitas'] ?></td>
                                                                 </tr>
@@ -72,7 +75,7 @@
 
                                                     <!-- Tab Konversi -->
                                                     <div class="tab-pane p-3" id="konversi" role="tabpanel">
-                                                   <div style="width:100%;height:600px;overflow:scroll;overflow-y:scroll;overflow-x:hidden; background-color: white;">
+                                                   <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:hidden; background-color: white;">
                                                     <table class="table table-bordered">
                                                         <thead>
                                                         <tr>
@@ -96,8 +99,13 @@
                                                    </div>
                                                     </div>
                                                     <div class="tab-pane p-3" id="bobot" role="tabpanel">
-                                                        <div style="height: 600px;">
-                                                         <span class="float-right">
+                                                   <div style="height: 500px;">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th colspan="7">
+                                                                NILAI BOBOT 
+                                                                <span class="float-right">
                                                         <a class="nav-link" data-toggle="dropdown" href="#">
                                                             <i class="bi bi-three-dots-vertical" style="color:grey"></i>
                                                         </a>
@@ -113,10 +121,7 @@
                                                             <a href="#" class="dropdown-item dropdown-footer"></a>
                                                         </div>
                                                     </span>
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                        <tr>
-                                                            <th colspan="7">NILAI BOBOT</th>
+                                                            </th>
                                                         </tr>
                                                         <tr style="background-color: whitesmoke;">
                                                             <th style="width: 10px;">No.</th>
@@ -158,7 +163,7 @@
                                                     </div>
                                                     </div>
                                                     <div class="tab-pane p-3" id="utility" role="tabpanel">
-                                                    <div style="width:100%;height:600px;overflow:scroll;overflow-y:scroll;overflow-x:hidden; background-color: white;">
+                                                    <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:hidden; background-color: white;">
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -182,7 +187,7 @@
                                                    </div>
                                                     </div>
                                                     <div class="tab-pane p-3" id="nilai" role="tabpanel">
-                                                    <div style="width:100%;height:600px;overflow:scroll;overflow-y:scroll;overflow-x:hidden; background-color: white;">
+                                                    <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:hidden; background-color: white;">
                                                     <table class="table table-bordered">
                                                         <thead>
                                                         <tr>

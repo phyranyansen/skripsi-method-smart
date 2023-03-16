@@ -78,5 +78,17 @@ $route['bobot-value']        = 'method/showing_bobot_value';
 //Utility
 $route['utility-get']        = 'method/get_utility';
 
+//Report
+$route['laporan']             = 'report';
+$route['laporan-pariwisata']  = 'report/report_wisata';
+$route['laporan-smart']       = 'report/report_wisata_show';
+$route['rp-wisata']           = 'report/report_wisata_table';
+$route['rp-konversi']         = 'report/report_konversi_table';
+$route['rp-bobot']            = 'report/report_bobot_table';
+$route['rp-normalisasi']      = 'report/repot_bobot_normalisasi_table';
+$route['rp-utility']          = 'report/get_utility_table';
+$route['rp-result']           = 'report/get_result_table';
+
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

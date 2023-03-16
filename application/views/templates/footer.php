@@ -138,5 +138,8 @@
         <!-- method -->
         <script type="text/javascript" src="assets/admin/js/method/method_get.js"></script>
         <script type="text/javascript" src="assets/admin/js/method/method_edit.js"></script>
+
+        <!-- report -->
+        <script type="text/javascript" src="assets/admin/js/report/view_report.js"></script>
     </body>
 </html>
