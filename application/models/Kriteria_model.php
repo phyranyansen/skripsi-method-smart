@@ -26,6 +26,15 @@ class Kriteria_Model extends CI_Model {
         $this->db->insert_batch('kriteria', $data);
     }
 
+    function edit($where, $data)
+    {
+        $this->db->where($where);
+        $query = $this->db->update('kriteria', $data);
+        return $query;
+    }
+
+
+
     function delete($id)
     {
         $this->db->delete('kriteria', $id);

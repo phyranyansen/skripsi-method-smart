@@ -80,7 +80,15 @@
             $(document).ready(function() {
                 $('form').parsley();
             });
-
+        
+        
+            function timer_reload() {
+                    setTimeout(function() {
+                        window.location.href =
+                            "<?= strtolower($title); ?>";
+                    
+                    }, 1700);
+                }
 
             $(document).ready(function(){
                 // Basic
@@ -135,6 +143,10 @@
         <script type="text/javascript" src="assets/admin/js/pariwisata/pariwisata_tambah.js"></script>
         <script type="text/javascript" src="assets/admin/js/pariwisata/pariwisata_hapus.js"></script>
         <script type="text/javascript" src="assets/admin/js/pariwisata/pariwisata_upload.js"></script>
+        <!-- kriteria -->
+        <script type="text/javascript" src="assets/admin/js/kriteria/kriteria_tambah.js"></script>
+        <script type="text/javascript" src="assets/admin/js/kriteria/kriteria_edit.js"></script>
+        <script type="text/javascript" src="assets/admin/js/kriteria/kriteria_hapus.js"></script>
         <!-- bobot -->
         <script type="text/javascript" src="assets/admin/js/bobot/bobot_get.js"></script>
         <!-- method -->

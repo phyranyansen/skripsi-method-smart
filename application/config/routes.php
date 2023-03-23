@@ -65,6 +65,7 @@ $route['edit-wisata']        = 'pariwisata/edit';
 //Kriteria
 $route['kriteria']           = 'kriteria';
 $route['tambah-kriteria']    = 'kriteria/add';
+$route['edit-kriteria']      = 'kriteria/edit';
 $route['hapus-kriteria']     = 'kriteria/delete';
 
 

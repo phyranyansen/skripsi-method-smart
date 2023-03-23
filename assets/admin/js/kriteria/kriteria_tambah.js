@@ -1,9 +1,9 @@
 
-//INSERT
+//ADD Kriteria
 $(document).ready(function() {
-    $('#add-wisata').submit(function(e) {
+    $('#FormKriteria-add').submit(function(e) {
         $.ajax({
-            url : "tambah-wisata",
+            url : "tambah-kriteria",
             type: "POST",
             data: new FormData(this),
             processData: false,
@@ -27,6 +27,3 @@ $(document).ready(function() {
     })
 
 });
-
-
-

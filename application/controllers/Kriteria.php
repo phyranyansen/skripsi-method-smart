@@ -23,26 +23,26 @@ class Kriteria extends CI_Controller {
     //tambah
     public function add()
     {
-        $pariwisata = $this->kriteria->get();
+        $kriteria = $this->kriteria->get();
         $data = [
-            'Nama_Pariwisata'   => $_POST['nama_pariwisata'],
-            'Alamat'            => $_POST['alamat'],
-            'Kode_Pariwisata'   => 'PRW/'.date('Y').'/00'.count($pariwisata)+1,
-            'CreatedBy'         => 0,
+            'Nama_Kriteria'     => $_POST['nama_kriteria'],
+            'Atribut'           => $_POST['atribut'],
+            'Kode_Kriteria'     => 'K0'.count($kriteria)+1,
+            'CreatedBy'         => $this->session->userdata('id_login'),
             'CreatedDate'       => date('Y-m-d')
         ];
-        $where = ['Nama_Pariwisata' => $_POST['nama_pariwisata']];
-        $find  = $this->wisata->get_where($where);
+        $where = ['Nama_Kriteria' => $_POST['nama_kriteria']];
+        $find  = $this->kriteria->get_where($where);
         
           
         if($find!=null)
         {
             echo json_encode(
                 array("statusCode"=>400,
-                "pesan"  => "Gagal menyimpan. Data '<strong>".$find['Nama_Pariwisata']."</strong>' sudah ada dalam database!")
+                "pesan"  => "Gagal menyimpan. Kriteria '<strong>".$find['Nama_Kriteria']."</strong>' sudah ada dalam database!")
             );
         }else{
-            $this->wisata->save($data);
+            $this->kriteria->save($data);
             echo json_encode(
                 array("statusCode"=>200,
                 "pesan"  => "Data berhasil disimpan!")
@@ -52,11 +52,63 @@ class Kriteria extends CI_Controller {
     }
 
 
+    public function edit()
+    {
+
+        if(empty($_POST['simpan']))
+        {
+            $where = [
+                'Id_Kriteria' => $_POST['id_kriteria']
+            ];
+    
+            $result = $this->kriteria->get_where($where);
+            if(!empty($result))
+            {
+                $data = [
+                    'nama'          => $result['Nama_Kriteria'],
+                    'atribut'       => $result['Atribut'],
+                    'id_kriteria'   => $result['Id_Kriteria']
+                ];
+                echo json_encode(
+                    array("statusCode"=>200,
+                    "pesan"  => "Get berhasil disimpan!",
+                    "data"   => $data
+                    )
+                );
+                
+    
+            }
+        }else{
+          $this->save_edit();
+          
+        }
+
+    }
+
+    private function save_edit()
+    {
+        $where  = ['Id_Kriteria' => $_POST['id_kriteria']];
+        $data = [
+            'Nama_Kriteria'   => $_POST['nama_kriteria'],
+            'Atribut'         => $_POST['atribut'],
+            'CreatedBy'       => $this->session->userdata('id_login'),
+            'CreatedDate'     => date('Y-m-d')
+        ];
+
+        $this->kriteria->edit($where, $data);
+        echo json_encode(
+            array("statusCode"=>200,
+            "pesan"  => "Data berhasil disimpan!")
+        );
+    }
+
+
+    //Delete Kriteria
     public function delete()
     {
         
         $where = [
-            'Id_Pariwisata' => $_POST['id_wisata']
+            'Id_Kriteria' => $_POST['id_kriteria']
         ];
 
         $this->kriteria->delete($where);

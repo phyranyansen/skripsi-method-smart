@@ -11,12 +11,12 @@
                                                     <span class="dropdown-item dropdown-header">Menu</span>
                                                     <div class="dropdown-divider"></div>
 
-                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#pariwisata-tambah">
-                                                        <i class="bi bi-plus-circle mr-2"></i> Tambah Data
+                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#kriteria-tambah">
+                                                        <i class="bi bi-plus-circle mr-2"></i> Tambah Kriteria
                                                         <!-- <span class="float-right text-muted text-sm">3 mins</span> -->
                                                     </a>
-                                                    <a href="#" class="dropdown-item" id="delete_all">
-                                                        <i class="bi bi-trash mr-2"></i> Hapus Semua
+                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#kriteria-tambah">
+                                                        <i class="bi bi-plus-circle mr-2"></i> Tambah Kriteria Detail
                                                         <!-- <span class="float-right text-muted text-sm">3 mins</span> -->
                                                     </a>
                                                     <div class="dropdown-divider"></div>
@@ -54,8 +54,8 @@
                                                                 <td><?= $row['Nama_Kriteria'] ?></td>
                                                                 <td><?= $row['Atribut'] ?></td>
                                                                 <td style="text-align: center; width: 10%;">
-                                                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="edit-wisata" data-WisataEdit="<?= $row['Id_Kriteria']?>"><i class="fa fa-pencil"></i></a>
-                                                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="delete-wisata" data-WisataDelete="<?= $row['Id_Kriteria']?>"><i class="fa fa-trash"></i></a>
+                                                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#kriteria-edit" id="edit-kriteria" data-KriteriaEdit="<?= $row['Id_Kriteria']?>"><i class="fa fa-pencil"></i></a>
+                                                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" id="delete-kriteria" data-KriteriaDelete="<?= $row['Id_Kriteria']?>"><i class="fa fa-trash"></i></a>
                                                                 </td>
                                                             </tr>
                                                           <?php } ?>

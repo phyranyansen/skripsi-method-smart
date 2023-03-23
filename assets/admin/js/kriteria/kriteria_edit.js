@@ -1,25 +1,20 @@
-//GANTI Pariwisata
+//GANTI Kriteria
 $(document).ready(function() {
-    $(document).on('click', '#edit-wisata', function() {
-        var id = $(this).attr('data-WisataEdit');
+    $(document).on('click', '#edit-kriteria', function() {
+        var id = $(this).attr('data-KriteriaEdit');
         $.ajax({
-            url     : 'edit-wisata',
+            url     : 'edit-kriteria',
             method  : 'POST',
             data    : {
-                id_wisata : id
+                id_kriteria : id
             },
             success: function(data) {
                var msg = JSON.parse(data);
                if(msg.statusCode==200)
                {
-                  $('#nama_pariwisata').val(msg.data.nama);
-                  $('#id_wisata').val(msg.data.id_wisata);
-                  $('#jarak').val(msg.data.jarak);
-                  $('#random').val(msg.data.random);
-                  $('#tiket_masuk').val(msg.data.harga);
-                  $('#jam_operasional').val(msg.data.jam);
-                  $('#aksebility').val(msg.data.akses);
-                  $('#fasilitas').val(msg.data.fasilitas);
+                  $('#nama_kriteria').val(msg.data.nama);
+                  $('#id_kriteria').val(msg.data.id_kriteria);
+                  $('#atribut').val(msg.data.atribut);
                   console.log(msg.pesan);
                }else{
                 Swal.fire('Failed!', msg.pesan, 'error');
@@ -39,7 +34,7 @@ $(document).ready(function() {
   $(document).ready(function() {
       $('#formEdit').submit(function(e) {
           $.ajax({
-              url : "edit-wisata",
+              url : "edit-kriteria",
               type: "POST",
               data: new FormData(this),
               processData: false,

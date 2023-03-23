@@ -113,11 +113,3 @@ $(document).ready(function(){
 
 });
 
-
-function timer_reload() {
-    setTimeout(function() {
-        window.location.href =
-            "pariwisata";
-     
-    }, 1700);
-}
