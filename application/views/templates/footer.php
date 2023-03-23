@@ -3,7 +3,7 @@
 
                 </div> <!-- content -->
 
-                <footer class="footer">
+                <footer class="footer" style="height: fit-content;">
                     <small>
                         <span style="float:left">© <?= date('Y') ?> phyranyansen</span>
                         <span style="float:right">Version 1.0.</span>
@@ -135,6 +135,8 @@
         <script type="text/javascript" src="assets/admin/js/pariwisata/pariwisata_tambah.js"></script>
         <script type="text/javascript" src="assets/admin/js/pariwisata/pariwisata_hapus.js"></script>
         <script type="text/javascript" src="assets/admin/js/pariwisata/pariwisata_upload.js"></script>
+        <!-- bobot -->
+        <script type="text/javascript" src="assets/admin/js/bobot/bobot_get.js"></script>
         <!-- method -->
         <script type="text/javascript" src="assets/admin/js/method/method_get.js"></script>
         <script type="text/javascript" src="assets/admin/js/method/method_edit.js"></script>

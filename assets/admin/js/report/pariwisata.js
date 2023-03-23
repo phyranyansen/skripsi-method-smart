@@ -41,7 +41,7 @@ $(document).ready(function() {
         },
         willClose: () => {
             clearInterval(timerInterval);
-            $('#RP-WST').modal('hide');
+           
         }
         }).then((result) => {
         /* Read more about handling dismissals below */

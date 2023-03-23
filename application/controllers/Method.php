@@ -207,46 +207,6 @@ class Method extends CI_Controller {
 
 
 
-    //EDIT BOBOT VALUE
-    function edit_bobot()
-    { 
-        $where = [
-          'Id_Kriteria' => $_POST['id_kriteria']
-        ];
-        $data  = ['Bobot' => $_POST['bobot']];
-        $save  = $this->smart->update_bobot('bobot', $where, $data);
-        $find  = $this->smart->get_where('bobot', $where);
-
-          if($find['Bobot']==$_POST['bobot'])
-          {
-            $messge = [
-              'statusCode'  => 200,
-              'pesan'       => 'Berhasil mengubah nilai Bobot!'
-            ];
-            echo json_encode($messge);
-          }else{
-            $messge = [
-              'statusCode'  => 400,
-              'pesan'       => 'Gagal mengubah nilai Bobot!'
-            ];
-            echo json_encode($messge);
   
-          }
-    }
-
-    function showing_bobot_value()
-    {
-      $where = [
-        'Id_Kriteria'	=> $_POST['id_kriteria']
-      ];
-  
-      $result = $this->smart->get_where('bobot', $where);
-      $data   = [
-        'id'	  => $result['Id_Kriteria'],
-        'bobot'	=> $result['Bobot']
-      ];
-  
-      echo json_encode($data);
-    }
 
 }

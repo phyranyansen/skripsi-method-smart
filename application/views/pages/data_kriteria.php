@@ -23,7 +23,6 @@
                                                     <a href="#" class="dropdown-item dropdown-footer"></a>
                                                 </div>
                                             </span></h4>
-                
                                                 <!-- Nav tabs -->
                                                 <ul class="nav nav-tabs" role="tablist">
                                                     <li class="nav-item">
@@ -73,8 +72,8 @@
                                                                     <th style="width: 10px;">No.</th>
                                                                     <th>Kode Kriteria</th>
                                                                     <th>Nama Kriteria</th>
-                                                                    <th style="width: 120px;">Value</th>
-                                                                    <th>Rate</th>
+                                                                    <th style="width: 120px;">Kualitatif Nilai</th>
+                                                                    <th>Kuantitatif Nilai</th>
                                                                     <th>Keterangan</th>
                                                                     <th style="text-align: center; width: 10%;"></th>
                                                                 </tr>
@@ -85,8 +84,8 @@
                                                                     <td><?= $no++; ?></td>
                                                                     <td><?= $row['Kode_Kriteria'] ?></td>
                                                                     <td><?= $row['Nama_Kriteria'] ?></td>
-                                                                    <td><?= $row['Value1'] ?></td>
-                                                                    <td><?= $row['Rate'] ?></td>
+                                                                    <td><?= $row['Nilai_Kualitatif'] ?></td>
+                                                                    <td><?= $row['Nilai_Kuantitatif'] ?></td>
                                                                     <td><?= $row['Keterangan'] ?></td>
                                                                     <td style="text-align: center; width: 10%;">
                                                                     <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="edit-wisata" data-WisataEdit="<?= $row['Id_Kriteria']?>"><i class="fa fa-pencil"></i></a>

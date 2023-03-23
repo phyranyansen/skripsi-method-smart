@@ -31,16 +31,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <link href="assets/admin/vertical/assets/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
-    <link href="assets/admin/vertical/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
     
+    
+    <link href="assets/admin/vertical/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <!-- for excel library -->
     <script type="text/javascript" src="//unpkg.com/xlsx/dist/shim.min.js"></script>
     <script type="text/javascript" src="//unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
     <script type="text/javascript" src="//unpkg.com/blob.js@1.0.1/Blob.js"></script>
     <script type="text/javascript" src="//unpkg.com/file-saver@1.3.3/FileSaver.js"></script>
-    
     <title>Report-Preview</title>
 </head>
 <body>
@@ -60,7 +59,7 @@
             <i class="fa fa-print"></i>
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href='<?= base_url()."$pdf"; ?>' id="cmd"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+            <li><a class="dropdown-item" href='javascript:void(0);' onclick="generatePDF()"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
             <li><a class="dropdown-item" onclick="doit('xlsx');" style="cursor: pointer;"><i class="fa fa-file-excel-o"></i> Excel</a></li>
             <li><a class="dropdown-item" onclick="printDiv('printableArea')" style="cursor: pointer;"><i class="fa fa-print"></i> Print</a></li>
             <li><hr class="dropdown-divider"></li>

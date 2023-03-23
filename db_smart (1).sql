@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Mar 2023 pada 11.29
+-- Waktu pembuatan: 19 Mar 2023 pada 02.54
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.0.25
 
@@ -268,37 +268,37 @@ INSERT INTO `kriteria` (`Id_Kriteria`, `Kode_Kriteria`, `Nama_Kriteria`, `Atribu
 CREATE TABLE `kriteria_detail` (
   `Id_Kriteria_Detail` int(11) NOT NULL,
   `Id_Kriteria` int(11) NOT NULL,
-  `Value1` varchar(100) NOT NULL,
-  `Keterangan` text NOT NULL,
-  `Rate` int(11) NOT NULL
+  `Nilai_Kualitatif` varchar(250) NOT NULL,
+  `Nilai_Kuantitatif` int(11) NOT NULL,
+  `Keterangan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `kriteria_detail`
 --
 
-INSERT INTO `kriteria_detail` (`Id_Kriteria_Detail`, `Id_Kriteria`, `Value1`, `Keterangan`, `Rate`) VALUES
-(1, 1, '15 - 20', 'Sangat Dekat', 5),
-(2, 1, '21 - 25', 'Dekat', 4),
-(3, 1, '26 - 29', 'Sedang', 3),
-(4, 1, '30 - 35', 'Jauh', 1),
-(5, 2, '5.000 - 5.0000', 'Sangat Murah', 5),
-(6, 2, '51.000 - 100.000', 'Murah', 4),
-(7, 2, '101.000 - 200.000', 'Sedang', 3),
-(8, 2, '201.000 - 300.000', 'Mahal', 2),
-(9, 2, '301.000', 'Sangat Mahal', 1),
-(10, 3, '7.00 - 10.00\n', 'pagi', 4),
-(11, 3, '11.00 - 14.00', 'siang', 3),
-(12, 3, '15.00 - 18.00', 'sore', 2),
-(13, 3, '19.00 - 00.00', 'malam', 1),
-(14, 4, 'Sepeda Motor, Mobil, Elf, Bis', '', 4),
-(15, 4, 'Sepeda Motor, Mobil, Elf/Bis', '', 3),
-(16, 4, 'Sepeda Motor, Mobil', '', 2),
-(17, 4, 'Sepeda Motor', '', 1),
-(18, 5, 'Lengkap', '', 4),
-(19, 5, 'Toilet, Mushola, Tempat makan', '', 3),
-(20, 5, 'Toilet, Mushola', '', 2),
-(21, 5, 'Toilet, Mushola, Tempat Makan, Tempat anak', '', 1);
+INSERT INTO `kriteria_detail` (`Id_Kriteria_Detail`, `Id_Kriteria`, `Nilai_Kualitatif`, `Nilai_Kuantitatif`, `Keterangan`) VALUES
+(1, 1, '15 - 20', 5, 'Sangat Dekat'),
+(2, 1, '21 - 25', 4, 'Dekat'),
+(3, 1, '26 - 29', 3, 'Sedang'),
+(4, 1, '30 - 35', 1, 'Jauh'),
+(5, 2, '5.000 - 5.0000', 5, 'Sangat Murah'),
+(6, 2, '51.000 - 100.000', 4, 'Murah'),
+(7, 2, '101.000 - 200.000', 3, 'Sedang'),
+(8, 2, '201.000 - 300.000', 2, 'Mahal'),
+(9, 2, '301.000', 1, 'Sangat Mahal'),
+(10, 3, '7.00 - 10.00\n', 4, 'pagi'),
+(11, 3, '11.00 - 14.00', 3, 'siang'),
+(12, 3, '15.00 - 18.00', 2, 'sore'),
+(13, 3, '19.00 - 24.00', 1, 'malam'),
+(14, 4, 'Sepeda Motor, Mobil, Elf, Bis', 4, ''),
+(15, 4, 'Sepeda Motor, Mobil, Elf/Bis', 3, ''),
+(16, 4, 'Sepeda Motor, Mobil', 2, ''),
+(17, 4, 'Sepeda Motor', 1, ''),
+(18, 5, 'Lengkap', 4, ''),
+(19, 5, 'Toilet, Mushola, Tempat makan', 3, ''),
+(20, 5, 'Toilet, Mushola', 2, ''),
+(21, 5, 'Toilet, Mushola, Tempat Makan, Tempat anak', 1, '');
 
 -- --------------------------------------------------------
 

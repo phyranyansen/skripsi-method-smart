@@ -136,5 +136,6 @@ $autoload['model'] = array(
     'pariwisata_model' => 'wisata',
     'kriteria_model'   => 'kriteria',
     'method_model'     => 'smart',
-    'report_model'     => 'report'
+    'report_model'     => 'report',
+    'bobot_model'      => 'bobot'
 );

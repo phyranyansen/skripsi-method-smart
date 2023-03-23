@@ -23,12 +23,18 @@ class Pariwisata extends CI_Controller {
     public function add()
     {
         $pariwisata = $this->wisata->get();
+        $random = date('Y/').count($pariwisata)+1;
         $data = [
-            'Nama_Pariwisata'   => $_POST['nama_pariwisata'],
-            'Alamat'            => $_POST['alamat'],
-            'Kode_Pariwisata'   => 'PRW/'.date('Y').'/00'.count($pariwisata)+1,
-            'CreatedBy'         => 0,
-            'CreatedDate'       => date('Y-m-d')
+           'Kode_Pariwisata'   => 'PRW/'.date('Y').'/00'.count($pariwisata)+1,
+           'Nama_Pariwisata' => $_POST['nama_pariwisata'],
+           'Jarak'           => $_POST['jarak'],
+           'Tiket_Masuk'     => $_POST['tiket_masuk'],
+           'Jam_Operasional' => $_POST['jam_operasional'],
+           'Aksebility'      => $_POST['aksebility'],
+           'Fasilitas'       => $_POST['fasilitas'],
+           'CreatedBy'       => $this->session->userdata('id_login'),
+           'CreatedDate'     => date('Y-m-d'),
+           'RandomCode'      => $random,
         ];
         $where = ['Nama_Pariwisata' => $_POST['nama_pariwisata']];
         $find  = $this->wisata->get_where($where);
@@ -42,6 +48,7 @@ class Pariwisata extends CI_Controller {
             );
         }else{
             $this->wisata->save($data);
+            $this->smart->save_konversi($random);
             echo json_encode(
                 array("statusCode"=>200,
                 "pesan"  => "Data berhasil disimpan!")
@@ -161,6 +168,69 @@ public function upload()
                 "pesan"  => "Upload data gagal!"
             ));
         }
+    }
+
+
+
+    public function edit()
+    {
+
+        if(empty($_POST['simpan']))
+        {
+            $where = [
+                'Id_Pariwisata' => $_POST['id_wisata']
+            ];
+    
+            $result = $this->wisata->get_where($where);
+            if(!empty($result))
+            {
+                $data = [
+                    'nama'        => $result['Nama_Pariwisata'],
+                    'jarak'       => $result['Jarak'],
+                    'harga'       => $result['Tiket_Masuk'],
+                    'jam'         => $result['Jam_Operasional'],
+                    'akses'       => $result['Aksebility'],
+                    'fasilitas'   => $result['Fasilitas'],
+                    'random'      => $result['RandomCode'],
+                    'id_wisata'   => $result['Id_Pariwisata']
+                ];
+                echo json_encode(
+                    array("statusCode"=>200,
+                    "pesan"  => "Get berhasil disimpan!",
+                    "data"   => $data
+                    )
+                );
+                
+    
+            }
+        }else{
+          $this->save_edit();
+          
+        }
+
+    }
+
+    private function save_edit()
+    {
+        $where  = ['Id_Pariwisata' => $_POST['id_wisata']];
+        $random = $_POST['random'];
+        $data = [
+            'Nama_Pariwisata' => $_POST['nama_pariwisata'],
+            'Jarak'           => $_POST['jarak'],
+            'Tiket_Masuk'     => $_POST['tiket_masuk'],
+            'Jam_Operasional' => $_POST['jam_operasional'],
+            'Aksebility'      => $_POST['aksebility'],
+            'Fasilitas'       => $_POST['fasilitas'],
+            'CreatedBy'       => $this->session->userdata('id_login'),
+            'CreatedDate'     => date('Y-m-d')
+        ];
+
+        $this->wisata->edit($where, $data);
+        $this->smart->update_konversi($random);
+        echo json_encode(
+            array("statusCode"=>200,
+            "pesan"  => "Data berhasil disimpan!")
+        );
     }
 
 

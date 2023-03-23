@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -49,7 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'dashboard';
+$route['default_controller'] = 'login';
+$route['sign-in']            = 'login/sign_in';
 
 //Pariwisata
 $route['pariwisata']         = 'pariwisata';
@@ -58,6 +60,7 @@ $route['tambah-wisata']      = 'pariwisata/add';
 $route['upload-wisata']      = 'pariwisata/upload';
 $route['hapus-wisata']       = 'pariwisata/delete';
 $route['delete-wisata']      = 'pariwisata/delete_all';
+$route['edit-wisata']        = 'pariwisata/edit';
 
 //Kriteria
 $route['kriteria']           = 'kriteria';
@@ -69,11 +72,16 @@ $route['hapus-kriteria']     = 'kriteria/delete';
 $route['method']             = 'method';
 $route['konversi-get']       = 'method/konversi';
 $route['result']             = 'method/get_result';
-//Bobot
-$route['bobot-get']          = 'method/bobot';
-$route['bobot-edit']         = 'method/edit_bobot';
+
+//Bobot-Method
 $route['bobot-normalisasi']  = 'method/bobot_normalisasi';
-$route['bobot-value']        = 'method/showing_bobot_value';
+$route['bobot-get']          = 'method/bobot';
+//Bobot
+$route['bobot']              = 'bobot';
+$route['bobot-view']         = 'bobot/bobot_get';
+$route['bobot-edit']         = 'bobot/edit_bobot';
+$route['bobot-value']        = 'bobot/showing_bobot_value';
+
 
 //Utility
 $route['utility-get']        = 'method/get_utility';

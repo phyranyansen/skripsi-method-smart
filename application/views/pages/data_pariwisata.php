@@ -29,12 +29,6 @@
                                         <a href="#" class="dropdown-item dropdown-footer"></a>
                                     </div>
                                 </span></h4>
-                                            <p class="text-muted m-b-30 font-14">
-                                                The Buttons extension for DataTables
-                                                provides a common set of options, API methods and styling to display
-                                                buttons on a page that will interact with a DataTable. The core library
-                                                provides the based framework upon which plug-ins can built.
-                                            </p>
                                             <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
                                             <table id="wisata"  class="table table-bordered">
                                                 <thead style="background-color: whitesmoke;">
@@ -64,8 +58,8 @@
                                                     <td><?= $row['Aksebility'] ?></td>
                                                     <td><?= $row['Fasilitas'] ?></td>
                                                     <th style="text-align: center; width: 10%;">
-                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="edit-wisata" data-WisataEdit="<?= $row['Id_Pariwisata']?>"><i class="fa fa-pencil"></i></a>
-                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="delete-wisata" data-WisataDelete="<?= $row['Kode_Pariwisata']?>"><i class="fa fa-trash"></i></a>
+                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#pariwisata-edit" id="edit-wisata" data-WisataEdit="<?= $row['Id_Pariwisata']?>"><i class="fa fa-pencil"></i></a>
+                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" id="delete-wisata" data-WisataDelete="<?= $row['Kode_Pariwisata']?>"><i class="fa fa-trash"></i></a>
                                                     </th>
                                                 </tr>
                                                <?php } ?>

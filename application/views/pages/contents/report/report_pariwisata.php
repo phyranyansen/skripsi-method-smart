@@ -55,6 +55,7 @@
 <div class="col-xl-auto">
     <!-- <center> -->
     <div id="printableArea">
+    <form class="form">   
         <table style="border: none; text-align:center; font-family: Arial, Helvetica, sans-serif;">
             <tr>
                 <td>
@@ -84,7 +85,7 @@
             </tr>
             </table>
         </center>
-        <table  class="table table-bordered">
+        <table  class="table table-bordered" id="myTable">
                  <thead>
                    <tr style="background-color: whitesmoke;">
                     <th colspan="8">Data Alternatif</th> 
@@ -180,6 +181,6 @@
                         
                     </tbody>
             </table>
-        
+    </form>
     </div>
 </div>

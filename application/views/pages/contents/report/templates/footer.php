@@ -45,7 +45,9 @@
         <!-- Dropzone js -->
          <script src="assets/admin/vertical/assets/plugins/dropzone/dist/dropzone.js"></script>
          <script src="assets/admin/vertical/assets/plugins/dropify/js/dropify.min.js"></script>
-        <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+       
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>  
         
         <!-- report -->
         <script type="text/javascript" src="assets/admin/js/report/pariwisata.js"></script>
@@ -53,11 +55,7 @@
         <!-- <script type="text/javascript" src="assets/admin/js/report/view_report.js"></script> -->
 </body>
 
-</html>
-
-
-
-<script>
+<script type="text/javascript">
 $('.select2').select2()
 //Initialize Select2 Elements
 $('.select2bs4').select2({
@@ -75,27 +73,9 @@ function printDiv(divName) {
     window.print();
 
     document.body.innerHTML = originalContents;
-
-
 }
+
+
+
 </script>
-
-
-<script type="text/javascript">
-function doit(type, fn, dl) {
-    var elt = document.getElementById('printableArea');
-    var wb = XLSX.utils.table_to_book(elt, {
-        sheet: "Sheet JS"
-    });
-    var table =
-        "<html><head><style> table, td {border:2px solid black} table {border-collapse:collapse}</style></head><body><table><tr>";
-    return dl ?
-        XLSX.write(wb, {
-            bookType: type,
-            bookSST: true,
-            type: 'base64'
-        }) :
-        XLSX.writeFile(wb, fn || ('SMART-Report.' + (type || 'xlsx')));
-
-}
-</script>
+</html>

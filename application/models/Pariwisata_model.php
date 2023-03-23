@@ -15,6 +15,12 @@ class Pariwisata_model extends CI_Model {
         return $query;
     }
 
+    function edit($where, $data)
+    {
+        $this->db->where($where);
+        $query = $this->db->update('pariwisata', $data);
+        return $query;
+    }
 
     function save($data)
     {

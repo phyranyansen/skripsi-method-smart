@@ -304,6 +304,72 @@ class Method_model extends CI_Model {
     }
 
 
+    //INSERT KONVERSI
+    function update_konversi($random=null)
+    {
+        if($random!=null)
+        {
+            $query  = $this->db->get_where('pariwisata', ['RandomCode' => $random])->result_array();
+            $result = $this->db->get_where('pariwisata', ['RandomCode' => $random])->row_array(); 
+            $data = [];
+            foreach ($query as $row) {
+                $explode_harga = explode('- ', $row['Tiket_Masuk']);
+                $explode_jam = explode('- ', $row['Jam_Operasional']);
+                $explode_akses = explode(', ', $row['Aksebility']);
+                $explode_fasilitas = explode(', ', $row['Fasilitas']);
+        
+                $tarif = $explode_harga[0];
+                $jam = $explode_jam[0];
+        
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => $this->jarak($row['Jarak']),
+                    'Kode_Kriteria' => 'K01',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+        
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => $this->harga($tarif),
+                    'Kode_Kriteria' => 'K02',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+        
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => $this->jam($jam),
+                    'Kode_Kriteria' => 'K03',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+        
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_akses),
+                    'Kode_Kriteria' => 'K04',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+        
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_fasilitas),
+                    'Kode_Kriteria' => 'K05',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+            }
+            $where = ['Kode_Pariwisata' => $result['Kode_Pariwisata']];
+            $this->db->where($where);
+            $this->db->update_batch('konversi', $data, 'Kode_Kriteria');
+
+        }
+      
+    }
+
+
 
     private function jarak($jarak) {
         if ($jarak >= 15 && $jarak <= 20) {
