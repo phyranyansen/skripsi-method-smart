@@ -1,6 +1,28 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+require_once APPPATH.'libraries/tcpdf/tcpdf.php';
 
 class Report extends CI_Controller {
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $cek = $this->session->userdata('login');
+        $url =   $url = current_url();
+        $url_cek = $this->session->userdata('url-server');
+            if($cek!='logged_in')
+            {
+                    if($url!=$url_cek)
+                    {
+                        redirect(base_url());
+  
+                    }
+                    
+            }   
+    }
+  
 
     public function index()
     {
@@ -12,6 +34,31 @@ class Report extends CI_Controller {
         $this->load->view('pages/contents/report/modal/modal_report_pariwisata', $data);
         $this->load->view('templates/footer');
     }
+
+    // public function export_pdf()
+    // {    
+    
+       
+    //     $pdf = new TCPDF();
+    //     $pdf->AddPage();
+    
+    //     // Generate the HTML to be added to the PDF
+    //     $html = $this->load->view('pages/contents/report/report_pariwisata', true);
+        
+    //     // Define a link with the action attribute
+    //     $link = $pdf->AddLink();
+    
+    //     // Add the link to the PDF
+    //     $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, false, true, $link);
+    
+    //     // Set the link target to the added link
+    //     $pdf->SetLink($link);
+    
+    //     $output = $pdf->Output('SNART Report.pdf', 'S');
+    //     echo '<embed src="data:application/pdf;base64,' . base64_encode($output) . '" width="100%" height="100%" />';
+    // }
+    
+    
 
    
     public function report_wisata()
@@ -249,5 +296,7 @@ class Report extends CI_Controller {
                      
         echo $html;
       }
+
+      
     
 }

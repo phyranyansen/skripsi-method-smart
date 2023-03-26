@@ -186,7 +186,7 @@
                                         </div>
                                         <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> Profile</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#"><i class="mdi mdi-logout m-r-5 text-muted"></i> Logout</a>
+                                        <a class="dropdown-item" href="logout"><i class="mdi mdi-logout m-r-5 text-muted"></i> Logout</a>
                                     </div>
                                 </li>
 

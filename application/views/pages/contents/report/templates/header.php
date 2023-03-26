@@ -25,7 +25,7 @@
       <!-- Dropzone css -->
       <link href="assets/admin/vertical/assets/plugins/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css">
       <link href="assets/admin/vertical/assets/plugins/dropify/css/dropify.min.css" rel="stylesheet">
- 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
          <!-- admin css -->
       <link href="assets/admin/vertical/assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -59,7 +59,7 @@
             <i class="fa fa-print"></i>
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href='javascript:void(0);' onclick="generatePDF()"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
+            <li><a class="dropdown-item" href='javascript:void(0);' id="download-pdf"><i class="fa fa-file-pdf-o"></i> PDF</a></li>
             <li><a class="dropdown-item" onclick="doit('xlsx');" style="cursor: pointer;"><i class="fa fa-file-excel-o"></i> Excel</a></li>
             <li><a class="dropdown-item" onclick="printDiv('printableArea')" style="cursor: pointer;"><i class="fa fa-print"></i> Print</a></li>
             <li><hr class="dropdown-divider"></li>

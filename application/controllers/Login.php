@@ -3,6 +3,22 @@
 
 class Login extends CI_Controller {
 
+    function __construct()
+    {
+        parent::__construct();
+		$cek = $this->session->userdata('login');
+		$url =   $url = current_url();
+		$url_cek = $this->session->userdata('url-server');
+        if($cek=='logged_in')
+		{
+			if($url!=$url_cek)
+			{
+				redirect(base_url('dashboard'));
+
+			}
+		}
+    }
+
     public function index()
     {
         $this->load->view('pages/login');

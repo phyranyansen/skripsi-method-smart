@@ -2,6 +2,23 @@
 
 class Method extends CI_Controller {
 
+  public function __construct()
+  {
+      parent::__construct();
+      $cek = $this->session->userdata('login');
+      $url =   $url = current_url();
+      $url_cek = $this->session->userdata('url-server');
+          if($cek!='logged_in')
+          {
+                  if($url!=$url_cek)
+                  {
+                      redirect(base_url());
+
+                  }
+                  
+          }   
+  }
+  
     public function index()
     {
 

@@ -66,7 +66,6 @@
             </tr>
             <tr></tr>
         </table>
-   
         <center>
             <table align="center" style="border: none; text-align:center; font-family: Arial, Helvetica, sans-serif;" class="center">
                 <tr>
@@ -85,7 +84,7 @@
             </tr>
             </table>
         </center>
-        <table  class="table table-bordered" id="myTable">
+        <table  class="table table-bordered" id="export">
                  <thead>
                    <tr style="background-color: whitesmoke;">
                     <th colspan="8">Data Alternatif</th> 

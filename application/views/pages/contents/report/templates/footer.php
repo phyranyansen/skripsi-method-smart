@@ -54,7 +54,28 @@
         <script type="text/javascript" src="assets/admin/js/report/get_report.js"></script>
         <!-- <script type="text/javascript" src="assets/admin/js/report/view_report.js"></script> -->
 </body>
+<script>
+      // Get the button element
+      const button = document.querySelector('#download-pdf');
 
+      // Add an event listener to the button
+      button.addEventListener('click', () => {
+        // Create a new jsPDF instance
+        const doc = new jsPDF();
+
+        // Get the HTML table element
+        const table = document.querySelector('#export');
+
+        // Convert the HTML table to a canvas element
+        html2canvas(table).then((canvas) => {
+          // Add the canvas to the PDF
+          doc.addImage(canvas.toDataURL('image/jpeg'), 'JPEG', 0, 0, doc.internal.pageSize.getWidth(), 0);
+
+          // Save the PDF
+          doc.save('table.pdf');
+        });
+      });
+    </script>
 <script type="text/javascript">
 $('.select2').select2()
 //Initialize Select2 Elements
@@ -76,6 +97,21 @@ function printDiv(divName) {
 }
 
 
+function doit(type, fn, dl) {
+    var elt = document.getElementById('printableArea');
+    var wb = XLSX.utils.table_to_book(elt, {
+        sheet: "Sheet JS"
+    });
+    var table =
+        "<html><head><style> table, td {border:2px solid black} table {border-collapse:collapse}</style></head><body><table><tr>";
+    return dl ?
+        XLSX.write(wb, {
+            bookType: type,
+            bookSST: true,
+            type: 'base64'
+        }) :
+        XLSX.writeFile(wb, fn || ('SMART-Report.' + (type || 'xlsx')));
 
+}
 </script>
 </html>

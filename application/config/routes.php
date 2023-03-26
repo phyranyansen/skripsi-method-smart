@@ -52,6 +52,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'login';
 $route['sign-in']            = 'login/sign_in';
+$route['dashboard']          = 'dashboard';
+$route['logout']             = 'dashboard/logout';
+
 
 //Pariwisata
 $route['pariwisata']         = 'pariwisata';
@@ -97,7 +100,8 @@ $route['rp-bobot']            = 'report/report_bobot_table';
 $route['rp-normalisasi']      = 'report/repot_bobot_normalisasi_table';
 $route['rp-utility']          = 'report/get_utility_table';
 $route['rp-result']           = 'report/get_result_table';
-
+//Export Report
+$route['rp-export']           = 'report/export_pdf';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
