@@ -52,6 +52,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'login';
 $route['sign-in']            = 'login/sign_in';
+$route['sign-up']            = 'login/sign_up';
+$route['register']           = 'login/user_add';
 $route['dashboard']          = 'dashboard';
 $route['logout']             = 'dashboard/logout';
 
@@ -70,6 +72,14 @@ $route['kriteria']           = 'kriteria';
 $route['tambah-kriteria']    = 'kriteria/add';
 $route['edit-kriteria']      = 'kriteria/edit';
 $route['hapus-kriteria']     = 'kriteria/delete';
+
+//User Login
+$route['user']               = 'userlogin';
+$route['user-group']         = 'userlogin/userAccess';
+$route['tambah-user']        = 'userlogin/add';
+$route['edit-user']          = 'userlogin/edit';
+$route['hapus-user']         = 'userlogin/delete';
+$route['edit-access']      = 'userlogin/edit_UserAccess';
 
 
 //Method

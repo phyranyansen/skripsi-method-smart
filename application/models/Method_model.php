@@ -73,19 +73,42 @@ class Method_model extends CI_Model {
     //GET Konversi
     function get_konversi()
     {
-        $query = $this->db->query("SELECT a.Kode_Pariwisata, b.Nama_Pariwisata, 
-        (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K01' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K01,
-        (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K02' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K02,
-        (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K03' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K03,
-        (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K04' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K04,
-        (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K05' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K05
-    FROM pariwisata b 
-    LEFT JOIN konversi a ON b.Kode_Pariwisata = a.Kode_Pariwisata
-    GROUP BY a.Kode_Pariwisata, b.Nama_Pariwisata
-    ORDER BY a.Id_Konversi; ");
+        $query = $this->db->query("SELECT 
+        a.Kode_Pariwisata, 
+        b.Nama_Pariwisata, 
+        MAX(CASE WHEN x.Kode_Kriteria = 'K01' THEN x.Nilai END) AS K01, 
+        MAX(CASE WHEN x.Kode_Kriteria = 'K02' THEN x.Nilai END) AS K02, 
+        MAX(CASE WHEN x.Kode_Kriteria = 'K03' THEN x.Nilai END) AS K03, 
+        MAX(CASE WHEN x.Kode_Kriteria = 'K04' THEN x.Nilai END) AS K04, 
+        MAX(CASE WHEN x.Kode_Kriteria = 'K05' THEN x.Nilai END) AS K05 
+    FROM 
+        pariwisata b 
+        LEFT JOIN konversi a ON b.Kode_Pariwisata = a.Kode_Pariwisata 
+        LEFT JOIN konversi x ON a.Kode_Pariwisata = x.Kode_Pariwisata 
+    GROUP BY 
+        a.Kode_Pariwisata, 
+        b.Nama_Pariwisata 
+    ORDER BY 
+        a.Id_Konversi;
+    ");
 
         return $query->result_array();
     }
+    // function get_konversi()
+    // {
+    //     $query = $this->db->query("SELECT a.Kode_Pariwisata, b.Nama_Pariwisata, 
+    //     (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K01' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K01,
+    //     (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K02' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K02,
+    //     (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K03' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K03,
+    //     (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K04' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K04,
+    //     (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K05' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K05
+    // FROM pariwisata b 
+    // LEFT JOIN konversi a ON b.Kode_Pariwisata = a.Kode_Pariwisata
+    // GROUP BY a.Kode_Pariwisata, b.Nama_Pariwisata
+    // ORDER BY a.Id_Konversi; ");
+
+    //     return $query->result_array();
+    // }
 
 
     //GET Utility Value process
@@ -305,12 +328,12 @@ class Method_model extends CI_Model {
 
 
     //INSERT KONVERSI
-    function update_konversi($random=null)
+    function update_konversi($kode=null)
     {
-        if($random!=null)
+        if($kode!=null)
         {
-            $query  = $this->db->get_where('pariwisata', ['RandomCode' => $random])->result_array();
-            $result = $this->db->get_where('pariwisata', ['RandomCode' => $random])->row_array(); 
+            $query  = $this->db->get_where('pariwisata', ['Kode_Pariwisata' => $kode])->result_array();
+            $result = $this->db->get_where('pariwisata', ['Kode_Pariwisata' => $kode])->row_array();
             $data = [];
             foreach ($query as $row) {
                 $explode_harga = explode('- ', $row['Tiket_Masuk']);
@@ -364,7 +387,9 @@ class Method_model extends CI_Model {
             $where = ['Kode_Pariwisata' => $result['Kode_Pariwisata']];
             $this->db->where($where);
             $this->db->update_batch('konversi', $data, 'Kode_Kriteria');
-
+          // echo "<pre>";
+          // print_r($data);
+          // echo "<pre>";
         }
       
     }
@@ -372,7 +397,7 @@ class Method_model extends CI_Model {
 
 
     private function jarak($jarak) {
-        if ($jarak >= 15 && $jarak <= 20) {
+        if ($jarak >= 15 && $jarak <= 20 || $jarak <= 15) {
           return 5;
         } elseif ($jarak >= 21 && $jarak <= 25) {
           return 4;
@@ -380,10 +405,10 @@ class Method_model extends CI_Model {
           return 3;
         } elseif ($jarak >= 30 && $jarak <= 35) {
           return 2;
-        } elseif ($jarak >= 35 && $jarak <= 40) {
+        } elseif ($jarak >= 35 && $jarak <= 40 || $jarak >= 40) {
           return 1;
         } else {
-          return "Jarak tidak valid";
+          return "Jarak TIdak Valid!";
         }
     }
 
@@ -411,7 +436,7 @@ class Method_model extends CI_Model {
     private function jam($jam) {
         $skor = 0;
         
-        if ($jam >= 7 && $jam <= 10 || $jam==24) {
+        if ($jam >= 7 && $jam <= 10 || $jam==24 || $jam==00 ) {
             $skor = 4;
         } elseif ($jam >= 11 && $jam <= 14) {
             $skor = 3;

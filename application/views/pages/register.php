@@ -34,7 +34,8 @@
     <link rel="stylesheet" href="assets/assets/vendor/css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="assets/assets/vendor/css/theme-default.css" class="template-customizer-theme-css';?>" />
     <link rel="stylesheet" href="assets/assets/css/demo.css" />
-
+    <!-- Sweet Alert -->
+    <link href="assets/admin/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
@@ -129,8 +130,8 @@
               </div>
               <!-- /Logo -->
               <h4 class="mb-2">Welcome to Smart Method System! 👋</h4>
-              <p class="mb-4">Sign Up new account!</p>
-              <form class="mb-3" action="javascript:void(0);" id="login">
+              <p class="mb-4">Sign Up New Account!</p>
+              <form class="mb-3" action="javascript:void(0);" id="Formregister">
                 <div class="mb-3">
                   <label for="email" class="form-label">Username</label>
                   <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus required />
@@ -138,27 +139,24 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Password</label>
-                    <a href="#">
-                      <small>Forgot Password?</small>
-                    </a>
                   </div>
                   <div class="input-group input-group-merge">
-                    <input type="password" id="password" class="form-control" name="password"  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password"
+                    <input type="password" id="password" class="form-control" name="password"  placeholder="Password.." aria-describedby="password"
                     />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
-                </div>
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
+                  <div class="input-group input-group-merge mt-3">
+                    <input type="password" id="passwordConf" class="form-control" name="confpassword"  placeholder="Konfirmasi password.." aria-describedby="password"/>
+                  </div>
+                  <div class="input-group input-group-merge mt-1">
+                    <span id="alert"></span>
                   </div>
                 </div>
                 <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                  <button class="btn btn-primary d-grid w-100" type="submit">Sign up</button>
                 </div>
                 <div class="mt-2">
-                  <p>Don't have an account? <a href=""> Sign up!</a> </p>
+                  <p>Have an account? <a href=""> Sign in!</a> </p>
                 </div>
               </form>
 
@@ -171,7 +169,6 @@
     </div>
 
 
-
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="assets/assets/vendor/libs/jquery/jquery.js"></script>
@@ -182,7 +179,7 @@
     <script src="assets/assets/vendor/libs/popper/popper.js"></script>
     <script src="assets/assets/vendor/js/bootstrap.js"></script>
     <script src="assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="assets/boostrap/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="assets/admin/sweetalert2/sweetalert2.min.js"></script>
     <script src="assets/assets/vendor/js/menu.js"></script>
     <script src="assets/assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
@@ -201,71 +198,55 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.5.0/js/md5.min.js"></script>
 
 <script>
- 
-//  $(document).ready(function() {
-// 	$('#login').submit(function(e) {
-//             //header form
-//             var username     = $('#username').val();
-//             var password     = $('#password').val();
-//             var convert      = md5(password);
-//                 $.ajax({
-//                         type       : "POST",
-//                         url        : "http://192.168.45.250:5007/api/login/SignIn",
-//                         contentType: "application/x-www-form-urlencoded",
-//                         async      : true,
-//                         dataType   : "json",
-//                         headers    : { "Username" : username,
-//                                       "Password"  : convert},
-//                        success     : function(data){
-//                                     //  Swal.fire('Success!', 'Login berhasil!', 'success');
-//                                      var user =  data.token.userName;
-//                                      sendToController(user);
-//                                     },
-//                        error      : function(data) {
-//                                     Swal.fire('Oops,', 'Terjadi kesalahan sign-in!', 'info');
-//                      }
-//                 }); 
-       
-//                e.preventDefault(); 
-//             });
-//         });
+    $(document).ready(function() {
+        $('#Formregister').submit(function(e) {
+                //header form
+                var username         = $('#username').val();
+                var password         = $('#password').val();
+                var passwordConf     = $('#passwordConf').val();
+            if(password != passwordConf)
+            {
+                var info = '<small class="text-danger">Konfirmasi password tidak cocok!</small>';
+                $('#alert').html(info);
+           }else{
+              $.ajax({
+                      url: "register",
+                      type: "POST",
+                      data:new FormData(this), 
+                      processData:false,
+                      contentType:false,
+                      cache: false,
+                      success: function(data){
+                          var msg = JSON.parse(data);
+                          if(msg.statusCode==200)
+                           {
+                               Swal.fire('Success!', msg.pesan, 'success');
+                               timer_reload();
+                            }else{
+                              Swal.fire('Failed!', msg.pesan, 'error');
+
+                          }
+                          },
+                      error : function(data) {
+                          Swal.fire('Oops!', 'Sign-in gagal!', 'error');
+                              }
+                          }); 
+           }  
         
+                e.preventDefault(); 
+                });
+            }); 
+
+        function timer_reload()
+        {
+        setTimeout(function(){
+            window.location.href = "<?= base_url(); ?>";
+            }, 1400);
+        }
+
+
+
         
-//         function sendToController(user)
-//         {
-
-//           var values = {"username" : user };
-//           $.ajax({
-//                         type       : "POST",
-//                         url        : "<?= base_url('Welcome/sign_in') ?>",
-//                         data       : values,
-//                         cache : false,
-//                        success     : function(data){
-//                         var msg = JSON.parse(data);
-//                                       if(msg.statusCode==200)
-//                                       {
-//                                         // alert(msg.Username);
-//                                          Swal.fire('Success!', msg.pesan, 'success');
-//                                          timer_reload();
-//                                       }else{
-//                                         Swal.fire('Oops,', msg.pesan, 'info');
-
-//                                       }
-//                                   },
-//                        error      : function(data) {
-//                                     Swal.fire('Oops,', 'Sign-in gagal!', 'info');
-//                      }
-//                 }); 
-//         }
-
-
-
-//     function timer_reload()
-//     {
-//       setTimeout(function(){
-//         window.location.href = "<?php echo site_url('dashboard'); ?>";
-//           }, 1400);
-//     }
     </script>
 
   </body>

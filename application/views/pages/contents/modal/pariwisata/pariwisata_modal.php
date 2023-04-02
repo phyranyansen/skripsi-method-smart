@@ -102,7 +102,7 @@
                                                           <input type="hidden" name="simpan" value="1" id="simpan">
                                                           <input type="text" name="nama_pariwisata" class="form-control" required placeholder="Nama" id="nama_pariwisata"/>
                                                           <input type="hidden" name="id_wisata" id="id_wisata">
-                                                          <input type="hidden" name="random" id="random">
+                                                          <input type="text" name="kode" id="kode" hidden>
                                                           </div>
                                                      </div>
                                                 <div class="form-group">

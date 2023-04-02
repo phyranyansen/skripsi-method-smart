@@ -48,12 +48,19 @@ class Login extends CI_Controller {
         $verify         = password_verify($password, $user['Password']);
 		$url			=   $url = current_url();
 
+        if($user['Status']==1)
+        {
+            $level = 'Administrator';
+        }else{
+            $level = 'User Public';
+        }
 		//array session
 		$data = [
             'id_login'      => $user['Id_Login'],
 			'username'      => $user['Username'],
 			'password'      => $password,
 			'status'        => $user['Status'],
+            'level'         => $level,
 			'activated'     => $user['Activated'],
 			'login'         => 'logged_in',
 			'url-server'    => $url
@@ -102,8 +109,9 @@ class Login extends CI_Controller {
 	//SECURITI ACCESS
     public function sign_up()
     {
-		$this->load->view('regist');
+        $this->load->view('pages/register');
     }
+
 
     public function user_add()
     {
@@ -111,9 +119,7 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('username', 'Username','required');
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('confpassword', 'Password Confirmation', 'required|matches[password]');
-		$array = [
-			'Username' => $_POST['username']
-		];
+		$array = ['Username' => $_POST['username']];
 		$cek_user = $this->db->get_where('login', $array)->row_array();
         if ($validation->run() == false) {
             echo json_encode(array(
@@ -121,14 +127,14 @@ class Login extends CI_Controller {
                 "pesan"        => "Failed, Gagal Register!"
             ));
         } else {
-			if($cek_user>0)
+			if(!empty($cek_user))
 			{
 				echo json_encode(array(
 					"statusCode"   =>500,
-					"pesan"        => "Failed, User ini telah digunakan!"
+					"pesan"        => "Username '".$cek_user['Username']."' telah digunakan!"
 				));
 			}else{
-				$this->model->add_user();
+				$this->user->register();
 					echo json_encode(array(
 					"statusCode"   =>200,
 					"pesan"        => "Sukses, Berhasil Register!"

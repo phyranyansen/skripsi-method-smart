@@ -137,5 +137,6 @@ $autoload['model'] = array(
     'kriteria_model'   => 'kriteria',
     'method_model'     => 'smart',
     'report_model'     => 'report',
-    'bobot_model'      => 'bobot'
+    'bobot_model'      => 'bobot',
+    'usermodel'        => 'user'
 );

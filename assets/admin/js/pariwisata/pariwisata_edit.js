@@ -15,12 +15,12 @@ $(document).ready(function() {
                   $('#nama_pariwisata').val(msg.data.nama);
                   $('#id_wisata').val(msg.data.id_wisata);
                   $('#jarak').val(msg.data.jarak);
-                  $('#random').val(msg.data.random);
+                  $('#kode').val(msg.data.kode);
                   $('#tiket_masuk').val(msg.data.harga);
                   $('#jam_operasional').val(msg.data.jam);
                   $('#aksebility').val(msg.data.akses);
                   $('#fasilitas').val(msg.data.fasilitas);
-                  console.log(msg.pesan);
+                  console.log(msg.data.kode);
                }else{
                 Swal.fire('Failed!', msg.pesan, 'error');
                }

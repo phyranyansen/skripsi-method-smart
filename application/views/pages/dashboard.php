@@ -1,7 +1,7 @@
 
 <br>
 <div class="alert alert-success" role="alert">
-<i class="bi bi-person-check"></i> <small> Selamat Datang, <strong><?= $this->session->userdata('username'); ?> </strong> Sebagai <strong>Administrator.</strong></small>
+<i class="bi bi-person-check"></i> <small> Selamat Datang, <strong><?= $this->session->userdata('username'); ?> </strong> Sebagai <strong><?= $this->session->userdata('level'); ?></strong></small>
  </div>
  <hr>
 <div class="row">

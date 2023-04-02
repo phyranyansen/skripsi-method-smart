@@ -131,6 +131,10 @@
                 })
             });
         
+
+        
+
+
         </script>
         <!-- App js -->
         <!-- Plugins Init js -->
@@ -152,7 +156,11 @@
         <!-- method -->
         <script type="text/javascript" src="assets/admin/js/method/method_get.js"></script>
         <script type="text/javascript" src="assets/admin/js/method/method_edit.js"></script>
-
+        
+        <!-- user -->
+        <script type="text/javascript" src="assets/admin/js/user/user_edit.js"></script>
+        <script type="text/javascript" src="assets/admin/js/user/user_tambah.js"></script>
+        <script type="text/javascript" src="assets/admin/js/user/user_hapus.js"></script>
         <!-- report -->
         <script type="text/javascript" src="assets/admin/js/report/view_report.js"></script>
     </body>

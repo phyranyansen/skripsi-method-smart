@@ -94,24 +94,27 @@
                                     </span>
                                 </a>
                             </li>
+                            <?php if(!empty($menu)){ ?>
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-table"></i> <span> Data Master </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                                 <ul class="list-unstyled">
-                                    <li><a href="pariwisata">Data Pariwisata</a></li>
-                                    <li><a href="kriteria">Data Kriteria</a></li>
-                                    <li><a href="bobot">Data Bobot</a></li>
+                                    <?php foreach($menu as $row) { ?>
+                                    <li><a href="<?= $row['Link']; ?>"><?= $row['Nama_Menu']; ?></a></li>
+                                    <?php } ?>
+                                    <!-- <li><a href="kriteria">Data Kriteria</a></li>
+                                    <li><a href="bobot">Data Bobot</a></li> -->
                                 </ul>
                             </li>
-                            
-                            
+                            <?php } ?>
+                            <?php if($this->session->userdata('status') == 1){ ?>
                             <li class="has_sub">
                                 <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-server-security"></i> <span> Security Setings </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
                                 <ul class="list-unstyled">
                                     <li><a href="user">Data User</a></li>
-                                    <li><a href="user-group">Group User</a></li>
+                                    <li><a href="user-group">User Group</a></li>
                                 </ul>
                             </li>
-                            
+                            <?php } ?>
                             <li>
                                 <a href="<?= base_url('method'); ?>" class="waves-effect"><i class="mdi mdi-chart-bar"></i><span> Smart Method </span></a>
                             </li>

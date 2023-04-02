@@ -8,6 +8,13 @@ class Bobot extends CI_Controller {
       $cek = $this->session->userdata('login');
       $url =   $url = current_url();
       $url_cek = $this->session->userdata('url-server');
+      $where = [
+        'Id_Login' => $this->session->userdata('id_login'),
+        'Link'     => 'bobot',
+        'Status'   => 1
+     ];
+     $menu  = $this->db->get_where('menu', $where)->row_array();
+
           if($cek!='logged_in')
           {
                   if($url!=$url_cek)
@@ -16,12 +23,18 @@ class Bobot extends CI_Controller {
 
                   }
                   
-          }   
+          }else{
+            if($menu['Status']==0)
+            {
+                redirect(base_url());
+            }
+        }     
   }
  
     public function index()
     {
         $data['title']     = 'Bobot';
+        $data['menu']      = $this->user->get_menu_where();
         $data['kriteria']  = $this->kriteria->get();
         $data['bobot']     = $this->smart->get_select_bobot();
         $this->load->view('templates/header', $data);

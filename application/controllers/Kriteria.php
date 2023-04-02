@@ -13,6 +13,13 @@ class Kriteria extends CI_Controller {
         $cek = $this->session->userdata('login');
         $url =   $url = current_url();
         $url_cek = $this->session->userdata('url-server');
+        $where = [
+                    'Id_Login' => $this->session->userdata('id_login'),
+                    'Link'     => 'kriteria',
+                    'Status'   => 1
+                 ];
+        $menu  = $this->db->get_where('menu', $where)->row_array();
+           
             if($cek!='logged_in')
             {
                     if($url!=$url_cek)
@@ -21,6 +28,11 @@ class Kriteria extends CI_Controller {
   
                     }
                     
+            }else{
+                if($menu['Status']==0)
+                {
+                    redirect(base_url());
+                }
             }   
     }
 
@@ -28,6 +40,7 @@ class Kriteria extends CI_Controller {
     public function index()
     {
         $data['title']     = 'Kriteria';
+        $data['menu']      = $this->user->get_menu_where();
         $data['list']      = $this->kriteria->get();
         $data['kriteria']  = $this->kriteria->get_kriteria();
         $this->load->view('templates/header', $data);

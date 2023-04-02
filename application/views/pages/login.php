@@ -159,7 +159,7 @@
                   <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                 </div>
                 <div class="mt-2">
-                  <p>Don't have an account? <a href=""> Sign up!</a> </p>
+                  <p>Don't have an account? <a href="sign-up"> Sign up!</a> </p>
                 </div>
               </form>
 

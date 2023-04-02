@@ -23,6 +23,7 @@ class Method extends CI_Controller {
     {
 
         $data['title']       = 'Method';
+        $data['menu']        = $this->user->get_menu_where();
         $data['alternatif']  = $this->smart->get('pariwisata');
         $data['bobot']       = $this->smart->get_select_bobot();
         $data['utility']     = $this->smart->get_utility();

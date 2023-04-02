@@ -13,6 +13,13 @@ class Pariwisata extends CI_Controller {
         $cek = $this->session->userdata('login');
         $url =   $url = current_url();
         $url_cek = $this->session->userdata('url-server');
+        $where = [
+            'Id_Login' => $this->session->userdata('id_login'),
+            'Link'     => 'pariwisata',
+            'Status'   => 1
+         ];
+       $menu  = $this->db->get_where('menu', $where)->row_array();
+
             if($cek!='logged_in')
             {
                     if($url!=$url_cek)
@@ -21,12 +28,18 @@ class Pariwisata extends CI_Controller {
   
                     }
                     
-            }   
+            }else{
+                if($menu['Status']==0)
+                {
+                    redirect(base_url());
+                }
+            }    
     }
     
     public function index()
     {
         $data['title'] = 'Pariwisata';
+        $data['menu']  = $this->user->get_menu_where();
         $data['list']  = $this->wisata->get();
         $this->load->view('templates/header', $data);
         $this->load->view('pages/data_pariwisata', $data);
@@ -208,7 +221,7 @@ public function upload()
                     'jam'         => $result['Jam_Operasional'],
                     'akses'       => $result['Aksebility'],
                     'fasilitas'   => $result['Fasilitas'],
-                    'random'      => $result['RandomCode'],
+                    'kode'        => $result['Kode_Pariwisata'],
                     'id_wisata'   => $result['Id_Pariwisata']
                 ];
                 echo json_encode(
@@ -230,7 +243,7 @@ public function upload()
     private function save_edit()
     {
         $where  = ['Id_Pariwisata' => $_POST['id_wisata']];
-        $random = $_POST['random'];
+        $kode   = $_POST['kode'];
         $data = [
             'Nama_Pariwisata' => $_POST['nama_pariwisata'],
             'Jarak'           => $_POST['jarak'],
@@ -243,7 +256,7 @@ public function upload()
         ];
 
         $this->wisata->edit($where, $data);
-        $this->smart->update_konversi($random);
+        $this->smart->update_konversi($kode);
         echo json_encode(
             array("statusCode"=>200,
             "pesan"  => "Data berhasil disimpan!")

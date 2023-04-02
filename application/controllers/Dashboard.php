@@ -22,8 +22,9 @@ class Dashboard extends CI_Controller {
 
     public function index()
     {
-        $data['barang'] = '';
-        $data['title']  = 'Dashboard';
+        $data['barang']   = '';
+        $data['title']    = 'Dashboard';
+        $data['menu']     = $this->user->get_menu_where();
         $data['wisata']   = count($this->wisata->get());
         $data['kriteria'] = count($this->kriteria->get());
         $data['bobot']    = count($this->bobot->get());

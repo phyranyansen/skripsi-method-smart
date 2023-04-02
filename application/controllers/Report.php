@@ -27,6 +27,7 @@ class Report extends CI_Controller {
     public function index()
     {
         $data['title']     = 'Laporan';
+        $data['menu']      = $this->user->get_menu_where();
         $data['list']      = $this->report->get();
         $data['wisata']    = $this->wisata->get();
         $this->load->view('templates/header', $data);
