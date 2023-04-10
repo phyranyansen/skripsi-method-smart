@@ -130,7 +130,7 @@
               </div>
               <!-- /Logo -->
               <h4 class="mb-2">Welcome to Smart Method System! 👋</h4>
-              <p class="mb-4">Sign Up New Account!</p>
+              <p class="mb-4">Sign-Up New Account!</p>
               <form class="mb-3" action="javascript:void(0);" id="Formregister">
                 <div class="mb-3">
                   <label for="email" class="form-label">Username</label>
