@@ -56,6 +56,10 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+/* body {
+        zoom: 87%;
+      } */
+
 </style>
     </head>
     <body class="fixed-left">

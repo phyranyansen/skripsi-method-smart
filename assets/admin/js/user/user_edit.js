@@ -2,10 +2,10 @@
 $(document).ready(function(){
     $('input[type="checkbox"]').click(function(){
       var dataId = $(this).attr('dataId');
-      var menu = $(this).attr('id');
-      var value = ($(this).is(":checked") ? 1 : 0);
+      var menu   = $(this).attr('id');
+      var value  = ($(this).is(":checked") ? 1 : 0);
 
-      console.log('Id Login: ' + dataId + ', Menu: ' + menu + ', Value: ' + value);
+      console.log('Id Login: ' + dataId + ', Menu: ' + menu + ', Status: ' + value );
 
         $.ajax({
           type: 'POST',
@@ -19,7 +19,9 @@ $(document).ready(function(){
             var msg = JSON.parse(response);
             if(msg.statusCode==200)
             {
-                   console.log(msg.pesan);
+                   console.log(msg.menu);
+                   console.log(msg.status);
+                   console.log(msg.user);
                    Swal.fire('Sukses!', msg.pesan, 'success');
                }else{
                 Swal.fire('Failed!', msg.pesan, 'error');

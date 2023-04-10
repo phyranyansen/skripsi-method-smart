@@ -38,8 +38,9 @@ class Pariwisata extends CI_Controller {
     
     public function index()
     {
-        $data['title'] = 'Pariwisata';
-        $data['menu']  = $this->user->get_menu_where();
+        $data['title']   = 'Pariwisata';
+        $data['menu']    = $this->user->get_menu_where();
+        $data['access']  = $this->user->get_menu_access();
         $data['list']  = $this->wisata->get();
         $this->load->view('templates/header', $data);
         $this->load->view('pages/data_pariwisata', $data);

@@ -133,12 +133,37 @@ class UserLogin extends CI_Controller {
     //EDIT USER ACCESS
     public function edit_UserAccess()
     {
-        $where = ['Id_Login' => $_POST['id_login'], 'Link' => $_POST['menu']];
-        $data  = ['Status'   => $_POST['status']];
+       
+        if($_POST['menu']=='tambah')
+        {
+            $data  = ['CreateStatus'   => $_POST['status']];
+            $where = ['Id_Login' => $_POST['id_login']];
+        }
+        elseif($_POST['menu']=='edit')
+        {
+            $data  = ['UpdateStatus'   => $_POST['status']];
+            $where = ['Id_Login' => $_POST['id_login']];
+        }
+        elseif($_POST['menu']=='hapus')
+        {
+            $data  = ['DeleteStatus'   => $_POST['status']];
+            $where = ['Id_Login' => $_POST['id_login']];
+        }
+        else{
+            $where = ['Id_Login' => $_POST['id_login'], 'Link' => $_POST['menu']];
+            $data  = ['Status'         => $_POST['status']];
+        }
+        
+        
         $this->user->save_edit($data, $where);
         echo json_encode(
-            array("statusCode"=>200,
-            "pesan"  => "Data berhasil disimpan!")
+            array(
+            "statusCode" =>200,
+            "pesan"      => "Data berhasil disimpan!",
+            "menu"       => $_POST['menu'],
+            "status"     => $_POST['status'],
+            "user"       => $_POST['id_login']
+            )
         );
     }
 

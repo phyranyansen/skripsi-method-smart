@@ -17,26 +17,32 @@ class UserModel extends CI_Model {
     public function get_menu()
     {
         $query = $this->db->query("SELECT
-                            Id_Login, Username,
-                            MAX(CASE WHEN MenuNumber = 1 THEN Nama_Menu END) AS Menu1,
-                            MAX(CASE WHEN MenuNumber = 2 THEN Nama_Menu END) AS Menu2,
-                            MAX(CASE WHEN MenuNumber = 3 THEN Nama_Menu END) AS Menu3,
-                            
-                            MAX(CASE WHEN MenuNumber = 1 THEN Status END) AS pariwisata,
-                            MAX(CASE WHEN MenuNumber = 2 THEN Status END) AS kriteria,
-                            MAX(CASE WHEN MenuNumber = 3 THEN Status END) AS bobot
-                        FROM (
-                            SELECT
-                                a.Id_Login,
-                                b.Username,
-                                a.Nama_Menu,
-                                a.Status,
-                                ROW_NUMBER() OVER (PARTITION BY a.Id_Login ORDER BY a.Id_Menu) AS MenuNumber
-                            FROM menu a
-                            JOIN login b ON b.Id_Login = a.Id_Login
-                        ) AS SourceTable
-                        GROUP BY
-                            Username;");
+        Id_Login, Username, 
+        MAX(CASE WHEN MenuNumber = 1 THEN Nama_Menu END) AS Menu1,
+        MAX(CASE WHEN MenuNumber = 2 THEN Nama_Menu END) AS Menu2,
+        MAX(CASE WHEN MenuNumber = 3 THEN Nama_Menu END) AS Menu3,
+        
+        MAX(CASE WHEN MenuNumber = 1 THEN Status END) AS pariwisata,
+        MAX(CASE WHEN MenuNumber = 2 THEN Status END) AS kriteria,
+        MAX(CASE WHEN MenuNumber = 3 THEN Status END) AS bobot,
+        CreateStatus,
+        UpdateStatus, 
+        DeleteStatus
+    FROM (
+        SELECT
+            a.Id_Login,
+            b.Username,
+            a.Nama_Menu,
+            a.Status,
+            a.CreateStatus,
+            a.UpdateStatus,
+            a.DeleteStatus,
+            ROW_NUMBER() OVER (PARTITION BY a.Id_Login ORDER BY a.Id_Menu) AS MenuNumber
+        FROM menu a
+        JOIN login b ON b.Id_Login = a.Id_Login
+    ) AS SourceTable
+    GROUP BY
+        Username;");
         return $query->result_array();
     }
 
@@ -48,6 +54,16 @@ class UserModel extends CI_Model {
         ];
         $query = $this->db->get_where('menu', $where);
         return $query->result_array();
+    }
+
+    function get_menu_access()
+    {
+        $where = [
+            'Id_Login' => $this->session->userdata('id_login'),
+            'Status'   => 1
+        ];
+        $query = $this->db->get_where('menu', $where);
+        return $query->row_array();
     }
 
     function save_edit($data, $where)
