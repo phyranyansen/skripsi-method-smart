@@ -66,13 +66,14 @@
                                                     <td><?= $row['Aksebility'] ?></td>
                                                     <td><?= $row['Fasilitas'] ?></td>
                                                     <?php if($access['UpdateStatus']==1 || $access['DeleteStatus']==1){ ?>
-                                                    <th style="text-align: center; width: 10%;">
+                                                    <td style="text-align: center; width: 10%;">
                                                      <?php if($access['UpdateStatus']==1){ ?>
                                                         <a href="javascript :void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#pariwisata-edit" id="edit-wisata" data-WisataEdit="<?= $row['Id_Pariwisata']?>"><i class="fa fa-pencil"></i></a>
                                                      <?php } if($access['DeleteStatus']==1){ ?>
                                                         <a href="javascript:void(0);" class="btn btn-primary btn-sm" id="delete-wisata" data-WisataDelete="<?= $row['Kode_Pariwisata']?>"><i class="fa fa-trash"></i></a>
-                                                    <?php } } ?>
-                                                    </th>
+                                                    <?php }  ?>
+                                                    </td>
+                                                    <?php } ?>
                                                 </tr>
                                                <?php } ?>
                                                 </tbody>

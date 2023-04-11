@@ -2,7 +2,9 @@
         <div class="col-md-12 col-lg-12 ">
                                         <div class="card m-b-30">
                                             <div class="card-body">
-                                            <h4 class="mt-0 header-title">Data <?= $title; ?> <span class="float-right">
+                                            <h4 class="mt-0 header-title">Data <?= $title; ?> 
+                                            <?php if($access['CreateStatus']==1){ ?>
+                                            <span class="float-right">
                                                 <a class="nav-link" data-toggle="dropdown" href="#">
                                                     <i class="bi bi-three-dots-vertical" style="color:grey"></i>
                                                 </a>
@@ -22,7 +24,9 @@
                                                     <div class="dropdown-divider"></div>
                                                     <a href="#" class="dropdown-item dropdown-footer"></a>
                                                 </div>
-                                            </span></h4>
+                                            </span>
+                                            <?php } ?>
+                                        </h4>
                                                 <!-- Nav tabs -->
                                                 <ul class="nav nav-tabs" role="tablist">
                                                     <li class="nav-item">
@@ -36,14 +40,16 @@
                                                 <!-- Tab Kriteria -->
                                                 <div class="tab-content">
                                                     <div class="tab-pane active p-3" id="alternatif" role="tabpanel">
-                                                    <table id="wisata"  class="table table-bordered">
+                                                    <table  class="table table-bordered">
                                                         <thead style="background-color: whitesmoke;">
                                                             <tr>
                                                                 <th style="width: 10px;">No.</th>
                                                                 <th>Kode Kriteria</th>
                                                                 <th>Nama Kriteria</th>
                                                                 <th>Atribut</th>
-                                                                <th style="text-align: center; width: 10%;"></th>
+                                                                <?php if($access['UpdateStatus']==1 || $access['DeleteStatus']==1){ ?>
+                                                                <th style="text-align: center; width: 10%;">Action</th>
+                                                                <?php } ?>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -53,10 +59,15 @@
                                                                 <td><?= $row['Kode_Kriteria'] ?></td>
                                                                 <td><?= $row['Nama_Kriteria'] ?></td>
                                                                 <td><?= $row['Atribut'] ?></td>
+                                                                <?php if($access['UpdateStatus']==1 || $access['DeleteStatus']==1){ ?>
                                                                 <td style="text-align: center; width: 10%;">
+                                                                <?php if($access['UpdateStatus']==1){ ?>
                                                                     <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#kriteria-edit" id="edit-kriteria" data-KriteriaEdit="<?= $row['Id_Kriteria']?>"><i class="fa fa-pencil"></i></a>
+                                                                 <?php } if($access['DeleteStatus']==1){ ?>
                                                                     <a href="javascript:void(0);" class="btn btn-primary btn-sm" id="delete-kriteria" data-KriteriaDelete="<?= $row['Id_Kriteria']?>"><i class="fa fa-trash"></i></a>
+                                                                    <?php } ?>
                                                                 </td>
+                                                                <?php } ?>
                                                             </tr>
                                                           <?php } ?>
                                                             </tbody>
@@ -66,7 +77,7 @@
                                                     <!-- Tab Nilai -->
                                                     <div class="tab-pane p-3" id="konversi" role="tabpanel">
                                                     <div style="width:100%;height:700px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
-                                                        <table id="kriteria"  class="table table-bordered">
+                                                        <table id="wisata"  class="table table-bordered">
                                                             <thead style="background-color: whitesmoke;">
                                                                 <tr>
                                                                     <th style="width: 10px;">No.</th>
@@ -75,7 +86,9 @@
                                                                     <th style="width: 120px;">Kualitatif Nilai</th>
                                                                     <th>Kuantitatif Nilai</th>
                                                                     <th>Keterangan</th>
-                                                                    <th style="text-align: center; width: 10%;"></th>
+                                                                    <?php if($access['UpdateStatus']==1 || $access['DeleteStatus']==1){ ?>
+                                                                      <th style="text-align: center; width: 10%;">Action</th>
+                                                                    <?php } ?>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -87,10 +100,15 @@
                                                                     <td><?= $row['Nilai_Kualitatif'] ?></td>
                                                                     <td><?= $row['Nilai_Kuantitatif'] ?></td>
                                                                     <td><?= $row['Keterangan'] ?></td>
+                                                                    <?php if($access['UpdateStatus']==1 || $access['DeleteStatus']==1){ ?>
                                                                     <td style="text-align: center; width: 10%;">
-                                                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="edit-wisata" data-WisataEdit="<?= $row['Id_Kriteria']?>"><i class="fa fa-pencil"></i></a>
-                                                                    <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="delete-wisata" data-WisataDelete="<?= $row['Id_Kriteria']?>"><i class="fa fa-trash"></i></a>
-                                                                </td>
+                                                                    <?php if($access['UpdateStatus']==1){ ?>
+                                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="edit-wisata" data-WisataEdit="<?= $row['Id_Kriteria']?>"><i class="fa fa-pencil"></i></a>
+                                                                        <?php } if($access['DeleteStatus']==1){ ?>
+                                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="delete-wisata" data-WisataDelete="<?= $row['Id_Kriteria']?>"><i class="fa fa-trash"></i></a>
+                                                                        <?php } ?>
+                                                                    </td>
+                                                                <?php } ?>
                                                                 </tr>
                                                             <?php } ?>
                                                                 </tbody>

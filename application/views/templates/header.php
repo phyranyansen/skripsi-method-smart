@@ -118,10 +118,11 @@
                                     <li><a href="user-group">User Group</a></li>
                                 </ul>
                             </li>
-                            <?php } ?>
+                            <?php } if($this->session->userdata('level')=='Administrator'){ ?>
                             <li>
                                 <a href="<?= base_url('method'); ?>" class="waves-effect"><i class="mdi mdi-chart-bar"></i><span> Smart Method </span></a>
                             </li>
+                            <?php } ?>
                             <li class="menu-title">Report</li>
 
                              <li class="has_sub">
@@ -189,7 +190,7 @@
                                     <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                         <!-- item-->
                                         <div class="dropdown-item noti-title">
-                                            <h5>Welcome</h5>
+                                            <h5><?= $this->session->userdata('username'); ?></h5>
                                         </div>
                                         <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> Profile</a>
                                         <div class="dropdown-divider"></div>

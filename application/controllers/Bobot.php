@@ -37,6 +37,7 @@ class Bobot extends CI_Controller {
         $data['menu']      = $this->user->get_menu_where();
         $data['kriteria']  = $this->kriteria->get();
         $data['bobot']     = $this->smart->get_select_bobot();
+        $data['access']    = $this->user->get_menu_access();
         $this->load->view('templates/header', $data);
         $this->load->view('pages/data_bobot', $data);
         $this->load->view('pages/contents/modal/bobot/bobot_modal', $data);

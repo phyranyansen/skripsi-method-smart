@@ -131,21 +131,21 @@ class UserModel extends CI_Model {
                 'Id_Login'  => $id,
                 'Nama_Menu' => 'Data Pariwisata',
                 'Link'      => 'pariwisata',
-                'Status'    => 0,
+                'Status'    => 1,
             ];
 
             $data[] = [
                 'Id_Login'  => $id,
                 'Nama_Menu' => 'Data Kriteria',
                 'Link'      => 'kriteria',
-                'Status'    => 0,
+                'Status'    => 1,
             ];
 
             $data[] = [
                 'Id_Login'  => $id,
                 'Nama_Menu' => 'Data Bobot',
                 'Link'      => 'bobot',
-                'Status'    => 0,
+                'Status'    => 1,
             ];
 
             $query = $this->db->insert_batch('menu', $data);

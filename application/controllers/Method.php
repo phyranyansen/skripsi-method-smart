@@ -27,6 +27,7 @@ class Method extends CI_Controller {
         $data['alternatif']  = $this->smart->get('pariwisata');
         $data['bobot']       = $this->smart->get_select_bobot();
         $data['utility']     = $this->smart->get_utility();
+        $data['access']      = $this->user->get_menu_access();
         $this->load->view('templates/header', $data);
         $this->load->view('pages/method/smart', $data);
         $this->load->view('pages/contents/modal/bobot/bobot_modal', $data);

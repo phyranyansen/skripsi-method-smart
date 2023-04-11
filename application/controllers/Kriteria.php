@@ -43,6 +43,7 @@ class Kriteria extends CI_Controller {
         $data['menu']      = $this->user->get_menu_where();
         $data['list']      = $this->kriteria->get();
         $data['kriteria']  = $this->kriteria->get_kriteria();
+        $data['access']    = $this->user->get_menu_access();
         $this->load->view('templates/header', $data);
         $this->load->view('pages/data_kriteria', $data);
         $this->load->view('pages/contents/modal/kriteria/kriteria_modal', $data);
