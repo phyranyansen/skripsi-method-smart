@@ -52,18 +52,32 @@ class Bobot extends CI_Controller {
         $html = '';
         $no    = 1;
         $query = $this->bobot->get_select_bobot();
-        foreach ($query as $row) {
-          $html .= '<tr>';
-          $html .= '<td>'.$no.'.</td>';
-          $html .= '<td style="width: 20%;">'.$row['Kode_Kriteria'].'</td>';
-          $html .= '<td>'.$row['Nama_Kriteria'].'</td>';
-          $html .= '<td style="width: 20%;">'.$row['Nilai'].'%</td>';
-          $html .= '<td style="width: 6%;"><a href="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ganti-bobot"><i class="fa fa-pencil"></i></a></td>';
-          $html .= '</tr>';
-          $no++;
-        
+        if($this->session->userdata('Administrator')){
+          foreach ($query as $row) {
+            $html .= '<tr>';
+            $html .= '<td>'.$no.'.</td>';
+            $html .= '<td style="width: 20%;">'.$row['Kode_Kriteria'].'</td>';
+            $html .= '<td>'.$row['Nama_Kriteria'].'</td>';
+            $html .= '<td style="width: 20%;">'.$row['Nilai'].'%</td>';
+            $html .= '<td style="width: 6%;"><a href="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ganti-bobot"><i class="fa fa-pencil"></i></a></td>';
+            $html .= '</tr>';
+            $no++;
+          
+          }
+         echo $html;
+        }else{
+          foreach ($query as $row) {
+            $html .= '<tr>';
+            $html .= '<td>'.$no.'.</td>';
+            $html .= '<td style="width: 20%;">'.$row['Kode_Kriteria'].'</td>';
+            $html .= '<td>'.$row['Nama_Kriteria'].'</td>';
+            $html .= '<td style="width: 20%;">'.$row['Nilai'].'%</td>';
+            $html .= '</tr>';
+            $no++;
+          
+          }
+         echo $html;
         }
-       echo $html;
 
     }
 

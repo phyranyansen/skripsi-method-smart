@@ -30,13 +30,16 @@
                                 <?php } ?>
                             </h4>
                                             <p class="text-muted m-b-30 font-14">
-                                               <div class="alert alert-danger">
-                                                 Bobot Rule : <br> 
-                                                 - Dengan mengubah nilai bobot akan mempengaruhi perangkingan setiap nilai alternatif!
-                                                 <br>
-                                                 - List bobot tidak dapat ditambahkan melebihi data kriteria
-                                                 
-                                               </div>
+                                            <?php if($this->session->userdata('Administrator')){ ?>
+                                                <div class="alert alert-danger">
+                                                  Bobot Rule : <br> 
+                                                  - Dengan mengubah nilai bobot akan mempengaruhi perangkingan setiap nilai alternatif!
+                                                  <br>
+                                                  - List bobot tidak dapat ditambahkan melebihi data kriteria
+                                                  
+                                                </div>
+                                                            
+                                                            <?php } ?>
                                             </p>
                                             <table class="table table-bordered">
                                                         <thead>
@@ -45,7 +48,9 @@
                                                             <th>Kode Kriteria</th>
                                                             <th>Nama Kriteria</th>
                                                             <th>Nilai Bobot</th>
-                                                            <th></th>
+                                                            <?php if($this->session->userdata('Administrator')){ ?>
+                                                            <th>Action</th>
+                                                            <?php } ?>
                                                         </tr>
                                                         </thead>
                                                         <tbody id="data-list">

@@ -41,12 +41,15 @@ $(document).ready(function() {
         },
         willClose: () => {
             clearInterval(timerInterval);
-           
+            $('#RP-WST').fadeOut();
+            $('#RP-WST').modal('hide');
         }
         }).then((result) => {
         /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
-            console.log('I was closed by the timer')
+            console.log('I was closed by the timer');
+            $('#RP-WST').fadeOut();
+            $('#RP-WST').modal('hide');
         }
         })
     }
