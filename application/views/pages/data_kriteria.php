@@ -17,7 +17,7 @@
                                                         <i class="bi bi-plus-circle mr-2"></i> Tambah Kriteria
                                                         <!-- <span class="float-right text-muted text-sm">3 mins</span> -->
                                                     </a>
-                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#kriteria-tambah">
+                                                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#detail-tambah">
                                                         <i class="bi bi-plus-circle mr-2"></i> Tambah Kriteria Detail
                                                         <!-- <span class="float-right text-muted text-sm">3 mins</span> -->
                                                     </a>
@@ -77,7 +77,7 @@
                                                     <!-- Tab Nilai -->
                                                     <div class="tab-pane p-3" id="konversi" role="tabpanel">
                                                     <div style="width:100%;height:700px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
-                                                        <table id="wisata"  class="table table-bordered">
+                                                        <table class="table table-bordered">
                                                             <thead style="background-color: whitesmoke;">
                                                                 <tr>
                                                                     <th style="width: 10px;">No.</th>
@@ -103,9 +103,9 @@
                                                                     <?php if($access['UpdateStatus']==1 || $access['DeleteStatus']==1){ ?>
                                                                     <td style="text-align: center; width: 10%;">
                                                                     <?php if($access['UpdateStatus']==1){ ?>
-                                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="edit-wisata" data-WisataEdit="<?= $row['Id_Kriteria']?>"><i class="fa fa-pencil"></i></a>
+                                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detail-edit" id="edit-detail" data-detail="<?= $row['Id_Kriteria_Detail']?>"><i class="fa fa-pencil"></i></a>
                                                                         <?php } if($access['DeleteStatus']==1){ ?>
-                                                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" id="delete-wisata" data-WisataDelete="<?= $row['Id_Kriteria']?>"><i class="fa fa-trash"></i></a>
+                                                                         <a href="javascript:void(0);" class="btn btn-primary btn-sm" id="delete-detail" data-Detail="<?= $row['Id_Kriteria_Detail']?>"><i class="fa fa-trash"></i></a>
                                                                         <?php } ?>
                                                                     </td>
                                                                 <?php } ?>
@@ -121,3 +121,5 @@
                                         </div>
                                     </div>
                                     </div>
+
+                            

@@ -73,6 +73,11 @@ $route['tambah-kriteria']    = 'kriteria/add';
 $route['edit-kriteria']      = 'kriteria/edit';
 $route['hapus-kriteria']     = 'kriteria/delete';
 
+//Kriteria Detail
+$route['tambah-detail']      = 'kriteria/detail_add';
+$route['edit-detail']        = 'kriteria/edit_detail';
+$route['hapus-detail']       = 'kriteria/delete_detail';
+
 //User Login
 $route['user']               = 'userlogin';
 $route['user-group']         = 'userlogin/userAccess';

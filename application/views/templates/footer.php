@@ -130,11 +130,33 @@
                     }
                 })
             });
-        
+    
 
-        
+//GET DATATABLE
+$(document).ready(function () {
+    $('#detail').DataTable(
+        {
+            // "fixedHeader" : true,
+            "paging": false,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false,
+            "responsive": true,
+            scrollY:        "500px",
+            scrollX:        true,
+            scrollCollapse: true,
+            fixedHeader:    {
+                header: true,
+                footer: false
+            }
+        });
+    
+ });
 
 
+                                        
         </script>
         <!-- App js -->
         <!-- Plugins Init js -->
@@ -148,9 +170,12 @@
         <script type="text/javascript" src="assets/admin/js/pariwisata/pariwisata_hapus.js"></script>
         <script type="text/javascript" src="assets/admin/js/pariwisata/pariwisata_upload.js"></script>
         <!-- kriteria -->
+        <!-- <script type="text/javascript" src="assets/admin/js/kriteria/kriteria_get.js"></script> -->
         <script type="text/javascript" src="assets/admin/js/kriteria/kriteria_tambah.js"></script>
         <script type="text/javascript" src="assets/admin/js/kriteria/kriteria_edit.js"></script>
+        <script type="text/javascript" src="assets/admin/js/kriteria/detail_edit.js"></script>
         <script type="text/javascript" src="assets/admin/js/kriteria/kriteria_hapus.js"></script>
+        <script type="text/javascript" src="assets/admin/js/kriteria/detail_hapus.js"></script>
         <!-- bobot -->
         <script type="text/javascript" src="assets/admin/js/bobot/bobot_get.js"></script>
         <!-- method -->

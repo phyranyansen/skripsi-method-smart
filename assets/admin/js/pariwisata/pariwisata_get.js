@@ -10,6 +10,13 @@ $(document).ready(function () {
             "info": true,
             "autoWidth": false,
             "responsive": true,
+            scrollY:        "500px",
+            scrollX:        true,
+            scrollCollapse: true,
+            fixedHeader:    {
+                header: true,
+                footer: false
+            }
         });
     
  });

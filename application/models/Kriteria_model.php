@@ -33,8 +33,6 @@ class Kriteria_Model extends CI_Model {
         return $query;
     }
 
-
-
     function delete($id)
     {
         $this->db->delete('kriteria', $id);
@@ -50,5 +48,32 @@ class Kriteria_Model extends CI_Model {
                                    
        return $query->result_array();
    }
+
+   //SAVE Detail
+   function save_detail($data)
+   {
+     $query = $this->db->insert('kriteria_detail', $data);
+     return $query;
+   }
+
+   //DELETE Detail
+    function delete_detail($id)
+    {
+        $this->db->delete('kriteria_detail', $id);
+    }
+
+    function get_detail($where)
+    {
+        $query = $this->db->get_where('kriteria_detail', $where)->row_array();
+        return $query;
+    }
+
+    
+    function edit_detail($where, $data)
+    {
+        $this->db->where($where);
+        $query = $this->db->update('kriteria_detail', $data);
+        return $query;
+    }
 
 }

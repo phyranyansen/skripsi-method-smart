@@ -35,7 +35,7 @@
                                     </span>
                                     <?php } ?>
                                 </h4>
-                                            <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
+                                            <!-- <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;"> -->
                                             <table id="wisata"  class="table table-bordered">
                                                 <thead style="background-color: whitesmoke;">
                                                 <tr>
@@ -78,7 +78,7 @@
                                                <?php } ?>
                                                 </tbody>
                                             </table>
-                                            </div>
+                                            <!-- </div> -->
                                         </div>
                                     </div>
                                 </div> <!-- end col -->

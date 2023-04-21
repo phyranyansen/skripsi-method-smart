@@ -1,8 +1,8 @@
 
-//DELETE
+//DELETE Kriteria Detail
 $(document).ready(function(){
-    $(document).on('click', '#delete-kriteria', function() {
-      var id = $(this).attr('data-KriteriaDelete');
+    $(document).on('click', '#delete-detail', function() {
+      var id = $(this).attr('data-Detail');
       // alert(id);
       const swalWithBootstrapButtons = Swal.mixin({
           customClass: {
@@ -23,7 +23,7 @@ $(document).ready(function(){
           if (result.isConfirmed) {
 
       $.ajax({
-          url     : 'hapus-kriteria',
+          url     : 'hapus-detail',
           method  : 'POST',
           data    : {
               id_kriteria : id
@@ -59,4 +59,3 @@ $(document).ready(function(){
   });
 
 });
-

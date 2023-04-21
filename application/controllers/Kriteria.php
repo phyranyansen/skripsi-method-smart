@@ -47,6 +47,7 @@ class Kriteria extends CI_Controller {
         $this->load->view('templates/header', $data);
         $this->load->view('pages/data_kriteria', $data);
         $this->load->view('pages/contents/modal/kriteria/kriteria_modal', $data);
+        $this->load->view('pages/contents/modal/kriteria/kriteria_detail_modal', $data);
         $this->load->view('templates/footer');
 
     }
@@ -160,6 +161,97 @@ class Kriteria extends CI_Controller {
         }
     }
 
+
+    public function detail_add()
+    {
+            $data = [
+                'Id_Kriteria'       => $_POST['kriteria'],
+                'Nilai_Kualitatif'  => $_POST['kualitatif'],
+                'Nilai_Kuantitatif' => $_POST['kuantitatif'],
+                'Keterangan'        => $_POST['keterangan']
+            ];
+            
+            $this->kriteria->save_detail($data);
+            echo json_encode(
+                array("statusCode"=>200,
+                "pesan"  => "Data berhasil disimpan!")
+            );
+    }
+
+   //Delete Kriteria Detail
+    public function delete_detail()
+    {
+        
+        $where = [
+            'Id_Kriteria_Detail' => $_POST['id_kriteria']
+        ];
+
+        $this->kriteria->delete_detail($where);
+       
+        $find = $this->kriteria->get_detail($where);
+        if($find==null)
+        {
+            echo json_encode(array(
+                "statusCode" =>200,
+                "pesan"      =>"Hapus data berhasil!"
+            ));
+        }else{
+            echo json_encode(array(
+                "statusCode"=>400,
+                "pesan"  => "Hapus data gagal!"
+            ));
+        }
+    }
+
+    public function edit_detail()
+    {
+
+        if(empty($_POST['simpan']))
+        {
+            $where = [
+                'Id_Kriteria_Detail' => $_POST['id_detail']
+            ];
+    
+            $result = $this->kriteria->get_detail($where);
+            if(!empty($result))
+            {
+                $data = [
+                    'id_detail'     => $result['Id_Kriteria_Detail'],
+                    'kualitatif'    => $result['Nilai_Kualitatif'],
+                    'kuantitatif'   => $result['Nilai_Kuantitatif'],
+                    'keterangan'    => $result['Keterangan']
+                ];
+                echo json_encode(
+                    array("statusCode"=>200,
+                    "pesan"  => "Get berhasil disimpan!",
+                    "data"   => $data
+                    )
+                );
+                
+    
+            }
+        }else{
+          $this->save_edit_detail();
+          
+        }
+
+    }
+
+    private function save_edit_detail()
+    {
+        $where  = ['Id_Kriteria_Detail' => $_POST['id_detail']];
+        $data = [
+                'Id_Kriteria'       => $_POST['kriteria'],
+                'Nilai_Kualitatif'  => $_POST['kualitatif'],
+                'Nilai_Kuantitatif' => $_POST['kuantitatif'],
+                'Keterangan'        => $_POST['keterangan']
+            ];
+        $this->kriteria->edit_detail($where, $data);
+        echo json_encode(
+            array("statusCode"=>200,
+            "pesan"  => "Data berhasil disimpan!")
+        );
+    }
 
 
 }
