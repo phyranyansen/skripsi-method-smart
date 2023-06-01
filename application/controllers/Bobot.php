@@ -51,14 +51,36 @@ class Bobot extends CI_Controller {
         
         $html = '';
         $no    = 1;
-        $query = $this->bobot->get_select_bobot();
+          $query = $this->bobot->get_select_bobot();
         if($this->session->userdata('Administrator')){
           foreach ($query as $row) {
+            if($row['Nilai']==30)
+            {
+              $nilai="Sangat diprioritaskan";
+            }
+            elseif($row['Nilai']==25)
+            {
+              $nilai="Diprioritaskan";
+            }
+            elseif($row['Nilai']==20)
+            {
+              $nilai="Cukup diprioritaskan";
+            }
+            elseif($row['Nilai']==15)
+            {
+              $nilai="Kurang diprioritaskan";
+            }
+            elseif($row['Nilai']==10)
+            {
+              $nilai="Sangat kurang diprioritaskan";
+            }
             $html .= '<tr>';
             $html .= '<td>'.$no.'.</td>';
             $html .= '<td style="width: 20%;">'.$row['Kode_Kriteria'].'</td>';
             $html .= '<td>'.$row['Nama_Kriteria'].'</td>';
             $html .= '<td style="width: 20%;">'.$row['Nilai'].'%</td>';
+            
+            $html .= '<td style="width: 20%;">'.$nilai.'</td>';
             $html .= '<td style="width: 6%;"><a href="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ganti-bobot"><i class="fa fa-pencil"></i></a></td>';
             $html .= '</tr>';
             $no++;
@@ -67,11 +89,32 @@ class Bobot extends CI_Controller {
          echo $html;
         }else{
           foreach ($query as $row) {
+            if($row['Nilai']==30)
+            {
+              $nilai="Sangat diprioritaskan";
+            }
+            elseif($row['Nilai']==25)
+            {
+              $nilai="Diprioritaskan";
+            }
+            elseif($row['Nilai']==20)
+            {
+              $nilai="Cukup diprioritaskan";
+            }
+            elseif($row['Nilai']==15)
+            {
+              $nilai="Kurang diprioritaskan";
+            }
+            elseif($row['Nilai']==10)
+            {
+              $nilai="Sangat kurang diprioritaskan";
+            }
             $html .= '<tr>';
             $html .= '<td>'.$no.'.</td>';
             $html .= '<td style="width: 20%;">'.$row['Kode_Kriteria'].'</td>';
             $html .= '<td>'.$row['Nama_Kriteria'].'</td>';
             $html .= '<td style="width: 20%;">'.$row['Nilai'].'%</td>';
+            $html .= '<td style="width: 20%;">'.$nilai.'</td>';
             $html .= '</tr>';
             $no++;
           

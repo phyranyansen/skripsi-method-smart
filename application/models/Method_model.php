@@ -41,47 +41,97 @@ class Method_model extends CI_Model {
 
 
     //GET Bobot
-    function get_bobot()
+   function get_bobot()
     {
-        $query = $this->db->query("SELECT
-        MAX(CASE WHEN a.Id_Kriteria = '1' THEN a.Bobot END) as K01,
-        MAX(CASE WHEN a.Id_Kriteria = '2' THEN a.Bobot END) as K02,
-        MAX(CASE WHEN a.Id_Kriteria = '3' THEN a.Bobot END) as K03,
-        MAX(CASE WHEN a.Id_Kriteria = '4' THEN a.Bobot END) as K04,
-        MAX(CASE WHEN a.Id_Kriteria = '5' THEN a.Bobot END) as K05,
-        SUM(CASE WHEN a.Id_Kriteria IN ('1', '2', '3', '4', '5') THEN a.Bobot END) as Total
-      FROM bobot a;
-        ");
-        return $query->result_array();
+        $query = "SELECT ";
+         $jumlah_kriteria = count($this->get('kriteria'));
+        for ($i = 1; $i <= $jumlah_kriteria; $i++) {
+            $query .= "MAX(CASE WHEN a.Id_Kriteria = '$i' THEN a.Bobot END) as K0$i";
+            
+            if ($i < $jumlah_kriteria) {
+                $query .= ", ";
+            }
+        }
+        
+        $query .= ", SUM(CASE WHEN a.Id_Kriteria IN (";
+        
+        for ($i = 1; $i <= $jumlah_kriteria; $i++) {
+            $query .= "'$i'";
+            
+            if ($i < $jumlah_kriteria) {
+                $query .= ", ";
+            }
+        }
+        
+        $query .= ") THEN a.Bobot END) as Total ";
+        $query .= "FROM bobot a;";
+        
+        $result = $this->db->query($query);
+        return $result->result_array();
     }
 
+
+
+
+
     //GET Normalisasi Bobot
-    function get_bobot_normalisasi()
-    {
-       $query = $this->db->query("SELECT
-       MAX(CASE WHEN a.Id_Kriteria = '1' THEN a.Bobot END) / total_bobot as K01,
-       MAX(CASE WHEN a.Id_Kriteria = '2' THEN a.Bobot END) / total_bobot as K02,
-       MAX(CASE WHEN a.Id_Kriteria = '3' THEN a.Bobot END) / total_bobot as K03,
-       MAX(CASE WHEN a.Id_Kriteria = '4' THEN a.Bobot END) / total_bobot as K04,
-       MAX(CASE WHEN a.Id_Kriteria = '5' THEN a.Bobot END) / total_bobot as K05,
-       SUM(CASE WHEN a.Id_Kriteria IN ('1', '2', '3', '4', '5') THEN a.Bobot END) / total_bobot as Total
-     FROM bobot a, (SELECT SUM(Bobot) as total_bobot FROM bobot WHERE Id_Kriteria IN ('1', '2', '3', '4', '5')) b;");
-     return $query->result_array();
-    }
+  function get_bobot_normalisasi()
+  {
+      $query = "SELECT ";
+      $jumlah_kriteria = count($this->get('kriteria'));
+      for ($i = 1; $i <= $jumlah_kriteria; $i++) {
+          $query .= "MAX(CASE WHEN a.Id_Kriteria = '$i' THEN a.Bobot END) / total_bobot as K0$i";
+          
+          if ($i < $jumlah_kriteria) {
+              $query .= ", ";
+          }
+      }
+      
+      $query .= ", SUM(CASE WHEN a.Id_Kriteria IN (";
+      
+      for ($i = 1; $i <= $jumlah_kriteria; $i++) {
+          $query .= "'$i'";
+          
+          if ($i < $jumlah_kriteria) {
+              $query .= ", ";
+          }
+      }
+      
+      $query .= ") THEN a.Bobot END) / total_bobot as Total ";
+      $query .= "FROM bobot a, (SELECT SUM(Bobot) as total_bobot FROM bobot WHERE Id_Kriteria IN (";
+      
+      for ($i = 1; $i <= $jumlah_kriteria; $i++) {
+          $query .= "'$i'";
+          
+          if ($i < $jumlah_kriteria) {
+              $query .= ", ";
+          }
+      }
+      
+      $query .= ")) b;";
+      
+      $result = $this->db->query($query);
+      return $result->result_array();
+  }
+
 
 
     //GET Konversi
-    function get_konversi()
-    {
-        $query = $this->db->query("SELECT 
+function get_konversi()
+{
+    $query = "SELECT 
         a.Kode_Pariwisata, 
-        b.Nama_Pariwisata, 
-        MAX(CASE WHEN x.Kode_Kriteria = 'K01' THEN x.Nilai END) AS K01, 
-        MAX(CASE WHEN x.Kode_Kriteria = 'K02' THEN x.Nilai END) AS K02, 
-        MAX(CASE WHEN x.Kode_Kriteria = 'K03' THEN x.Nilai END) AS K03, 
-        MAX(CASE WHEN x.Kode_Kriteria = 'K04' THEN x.Nilai END) AS K04, 
-        MAX(CASE WHEN x.Kode_Kriteria = 'K05' THEN x.Nilai END) AS K05 
-    FROM 
+        b.Nama_Pariwisata";
+
+    $kriteria = $this->get('kriteria');
+    $numCriteria = count($kriteria);
+
+    for ($i = 1; $i <= $numCriteria; $i++) {
+        $kodeKriteria = ($i >= 10) ? 'K' . str_pad($i, 3, '0', STR_PAD_LEFT) : 'K' . str_pad($i, 2, '0', STR_PAD_LEFT);
+        $query .= ", MAX(CASE WHEN x.Kode_Kriteria = '$kodeKriteria' THEN x.Nilai ELSE 0 END) AS $kodeKriteria";
+    }
+
+    $query .= " FROM 
         pariwisata b 
         LEFT JOIN konversi a ON b.Kode_Pariwisata = a.Kode_Pariwisata 
         LEFT JOIN konversi x ON a.Kode_Pariwisata = x.Kode_Pariwisata 
@@ -89,88 +139,69 @@ class Method_model extends CI_Model {
         a.Kode_Pariwisata, 
         b.Nama_Pariwisata 
     ORDER BY 
-        a.Id_Konversi;
-    ");
+        a.Id_Konversi;";
 
-        return $query->result_array();
-    }
-    // function get_konversi()
-    // {
-    //     $query = $this->db->query("SELECT a.Kode_Pariwisata, b.Nama_Pariwisata, 
-    //     (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K01' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K01,
-    //     (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K02' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K02,
-    //     (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K03' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K03,
-    //     (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K04' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K04,
-    //     (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K05' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K05
-    // FROM pariwisata b 
-    // LEFT JOIN konversi a ON b.Kode_Pariwisata = a.Kode_Pariwisata
-    // GROUP BY a.Kode_Pariwisata, b.Nama_Pariwisata
-    // ORDER BY a.Id_Konversi; ");
+    $result = $this->db->query($query);
+    return $result->result_array();
+}
 
-    //     return $query->result_array();
-    // }
+
 
 
     //GET Utility Value process
-    function get_utility() {
-        
-        $k1 = [];
-        $k2 = [];
-        $k3 = [];
-        $k4 = [];
-        $k5 = [];
-        
-      $result = [];  
-      $query = $this->smart->get_konversi();
-      
-      if(!empty($query)){
-        foreach($query as $row) {
-    
-          $k1[] = $row['K01'];
-          $k2[] = $row['K02'];
-          $k3[] = $row['K03'];
-          $k4[] = $row['K04'];
-          $k5[] = $row['K05'];
-    
+   function get_utility()
+{
+    $get_kriteria = $this->db->get('kriteria')->result_array();
+    $numCriteria = count($get_kriteria);
+    $criteria = [];
+    $result = [];
+    $query = $this->get_konversi();
+
+    if (!empty($query)) {
+        for ($i = 1; $i <= $numCriteria; $i++) {
+            $kriteria = ($i >= 10) ? 'K' . str_pad($i, 3, '0', STR_PAD_LEFT) : 'K' . str_pad($i, 2, '0', STR_PAD_LEFT);
+            $criteria[$kriteria] = [];
         }
-    
-        $max1 = max($k1);
-        $max2 = max($k2);
-        $max3 = max($k3);
-        $max4 = max($k4);
-        $max5 = max($k5);
-    
-        $min1 = min($k1);
-        $min2 = min($k2);
-        $min3 = min($k3);
-        $min4 = min($k4);
-        $min5 = min($k5);
-    
-        foreach($query as $row) {
-    
-            $result['K01'][] = $this->utility($row['K01'], $min1, $max1);
-            $result['K02'][] = $this->utility($row['K02'], $min2, $max2);
-            $result['K03'][] = $this->utility($row['K03'], $min3, $max3);
-            $result['K04'][] = $this->utility($row['K04'], $min4, $max4);
-            $result['K05'][] = $this->utility($row['K05'], $min5, $max5); 
+
+        foreach ($query as $row) {
+            for ($i = 1; $i <= $numCriteria; $i++) {
+                $kriteria = ($i >= 10) ? 'K' . str_pad($i, 3, '0', STR_PAD_LEFT) : 'K' . str_pad($i, 2, '0', STR_PAD_LEFT);
+                $criteria[$kriteria][] = $row[$kriteria];
+            }
+        }
+
+        foreach ($criteria as $kriteria => $values) {
+            $max = max($values);
+            $min = min($values);
+
+            foreach ($query as $row) {
+                $result[$kriteria][] = $this->utility($row[$kriteria], $min, $max);
+            }
+        }
+
+        foreach ($query as $row) {
             $result['kode'][] = $row['Kode_Pariwisata'];
             $result['nama'][] = $row['Nama_Pariwisata'];
         }
-    
-        $array_result = [
-            'K01'   => $result['K01'],
-            'K02'   => $result['K02'],
-            'K03'   => $result['K03'],
-            'K04'   => $result['K04'],
-            'K05'   => $result['K05'],
-            'kode'  => $result['kode'],
-            'nama'  => $result['nama']
-        ];
-    
-        return $array_result;
 
-      }
-  } 
+        $array_result = [
+            'kode' => $result['kode'],
+            'nama' => $result['nama']
+        ];
+
+        foreach ($result as $kriteria => $values) {
+            if ($kriteria !== 'kode' && $kriteria !== 'nama') {
+                $array_result[$kriteria] = $values;
+            }
+        }
+
+        return $array_result;
+    }
+}
+
+
+
+
   
 
     
@@ -193,20 +224,6 @@ class Method_model extends CI_Model {
       return $nilai;
   }
 
-    // private function utility($out, $min, $max)
-    // {
-    //       // Menghitung hasil rumus
-    //       $hasil_rumus = ($out - $min) / ($max - $min);
-    
-    //       // Memastikan hasil rumus tidak menghasilkan error (divisi oleh nol)
-    //       if (!is_nan($hasil_rumus) && !is_infinite($hasil_rumus)) {
-    //           $nilai = $hasil_rumus;
-    //       } else {
-    //           $nilai = 0;
-    //       }
-
-    //       return $nilai;
-    // }
 
 
     //GET END OFF RESULT PROCCESS
@@ -237,29 +254,30 @@ class Method_model extends CI_Model {
     }
 
     //proses
-    private function nilai_akhir()
-    {
-        $utility    = $this->get_utility();
-        $bobot      = $this->get_bobot_normalisasi();
-        $pariwisata = count($this->wisata->get());
-        $array = [];
-        for($i=0; $i<$pariwisata; $i++)
-        {
-          foreach($bobot as $row)
-          {
+private function nilai_akhir()
+{
+    $utility    = $this->get_utility();
+    $bobot      = $this->get_bobot_normalisasi();
+    $pariwisata = count($this->wisata->get());
+    $kriteria   = count($bobot);
+    $array      = [];
 
-            $array['result'][] = ((($utility['K01'][$i]) * ($row['K01'])) + (($utility['K02'][$i]) * ($row['K02'])) + 
-                                 (($utility['K03'][$i]) * ($row['K03'])) + (($utility['K04'][$i]) * ($row['K04'])) +
-                                 (($utility['K05'][$i]) * ($row['K05'])));
-            $array['kode'][] = $utility['kode'][$i];
-            $array['nama'][] = $utility['nama'][$i];
+    for ($i = 0; $i < $pariwisata; $i++) {
+        $nilai_akhir = 0;
 
-          }
-       }
+        for ($j = 0; $j < $kriteria; $j++) {
+            $kriteria_key = 'K' . str_pad(($j + 1), 2, '0', STR_PAD_LEFT);
+            $nilai_akhir += $utility[$kriteria_key][$i] * $bobot[$j][$kriteria_key];
+        }
 
-        return $array;
-        
+        $array['result'][] = $nilai_akhir;
+        $array['kode'][]   = $utility['kode'][$i];
+        $array['nama'][]   = $utility['nama'][$i];
     }
+
+    return $array;
+}
+
 
 
     
@@ -275,6 +293,16 @@ class Method_model extends CI_Model {
                 $explode_jam = explode('- ', $row['Jam_Operasional']);
                 $explode_akses = explode(', ', $row['Aksebility']);
                 $explode_fasilitas = explode(', ', $row['Fasilitas']);
+        
+               
+                $explode_penjualan  = explode(', ', $row['Penjualan_Tiket']);
+                $explode_pembayaran = explode(', ', $row['Metode_Pembayaran']);
+                $explode_akses_wifi = explode(', ', $row['Akses_Wifi']);
+                $explode_informasi_event = explode(', ', $row['Informasi_Event']);
+                $explode_diskon     = explode(', ', $row['Informasi_Diskon']);
+                $explode_spot       = explode(', ', $row['Spot_Foto']);
+                $explode_informasi     = explode(', ', $row['Informasi']);
+                
         
                 $tarif = $explode_harga[0];
                 $jam = $explode_jam[0];
@@ -315,6 +343,61 @@ class Method_model extends CI_Model {
                     'Kode_Pariwisata' => $row['Kode_Pariwisata'],
                     'Nilai' => count($explode_fasilitas),
                     'Kode_Kriteria' => 'K05',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_penjualan),
+                    'Kode_Kriteria' => 'K06',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_pembayaran),
+                    'Kode_Kriteria' => 'K07',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+                
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_akses_wifi),
+                    'Kode_Kriteria' => 'K08',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+                
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_informasi_event),
+                    'Kode_Kriteria' => 'K09',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_diskon),
+                    'Kode_Kriteria' => 'K010',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+                
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_spot),
+                    'Kode_Kriteria' => 'K011',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_informasi),
+                    'Kode_Kriteria' => 'K012',
                     'CreatedBy' => 0,
                     'CreatedDate' => date('Y-m-d')
                 ];
@@ -340,6 +423,15 @@ class Method_model extends CI_Model {
                 $explode_jam = explode('- ', $row['Jam_Operasional']);
                 $explode_akses = explode(', ', $row['Aksebility']);
                 $explode_fasilitas = explode(', ', $row['Fasilitas']);
+
+                $explode_penjualan  = explode(', ', $row['Penjualan_Tiket']);
+                $explode_pembayaran = explode(', ', $row['Metode_Pembayaran']);
+                $explode_akses_wifi = explode(', ', $row['Akses_Wifi']);
+                $explode_informasi_event = explode(', ', $row['Informasi_Event']);
+                $explode_diskon     = explode(', ', $row['Informasi_Diskon']);
+                $explode_spot       = explode(', ', $row['Spot_Foto']);
+                $explode_informasi     = explode(', ', $row['Informasi']);
+                
         
                 $tarif = $explode_harga[0];
                 $jam = $explode_jam[0];
@@ -380,6 +472,61 @@ class Method_model extends CI_Model {
                     'Kode_Pariwisata' => $row['Kode_Pariwisata'],
                     'Nilai' => count($explode_fasilitas),
                     'Kode_Kriteria' => 'K05',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_penjualan),
+                    'Kode_Kriteria' => 'K06',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_pembayaran),
+                    'Kode_Kriteria' => 'K07',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+                
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_akses_wifi),
+                    'Kode_Kriteria' => 'K08',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+                
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_informasi_event),
+                    'Kode_Kriteria' => 'K09',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_diskon),
+                    'Kode_Kriteria' => 'K010',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+                
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_spot),
+                    'Kode_Kriteria' => 'K011',
+                    'CreatedBy' => 0,
+                    'CreatedDate' => date('Y-m-d')
+                ];
+                $data[] = [
+                    'Kode_Pariwisata' => $row['Kode_Pariwisata'],
+                    'Nilai' => count($explode_informasi),
+                    'Kode_Kriteria' => 'K012',
                     'CreatedBy' => 0,
                     'CreatedDate' => date('Y-m-d')
                 ];
@@ -449,5 +596,105 @@ class Method_model extends CI_Model {
         return $skor;
     }
 
+
+//     private function penjualan_tiket($penjualan) {
+//         $nilai = 0;
+//         if($penjualan == 'Lengkap')
+//         {
+//              $nilai = 3;
+//         }elseif($penjualan == 'Sedang')
+//         {
+//             $nilai = 2;
+//         }else{
+//             $nilai = 1;
+//         }
+
+//         return $nilai;
+//     }
+
+//     private function pembayaran($pembayaran) 
+//     {
+//         $nilai = 0;
+//         if($pembayaran == 'Lengkap')
+//         {
+//             $nilai = 3;
+//         }elseif($pembayaran == 'Sedang')
+//         {
+//             $nilai = 2;
+//         }else{
+//             $nilai = 1;
+//         }
+
+//         return $nilai;
+//     }
+
+//     private function akses_wifi($akses)
+//     {
+//         $nilai = 0;
+//         if($akses == 'Ada')
+//         {
+//             $nilai = 2;
+//         }else{
+//             $nilai = 1;
+//         }
+
+//         return $nilai;
+//     }
+
+//     private function informasi_event($informasi)
+//     {
+//         $nilai = 0;
+//                 if($informasi == 'Lengkap')
+//                 {
+//                     $nilai = 3;
+//                 }elseif($informasi == 'Sedang')
+//                 {
+//                     $nilai = 2;
+//                 }else{
+//                     $nilai = 1;
+//                 }
+
+//                 return $nilai;
+//     }
+    
+//     private function informasi_diskon($informasi)
+//     {
+//         $nilai = 0;
+//                 if($informasi == 'Lengkap')
+//                 {
+//                     $nilai = 3;
+//                 }elseif($informasi == 'Sedang')
+//                 {
+//                     $nilai = 2;
+//                 }else{
+//                     $nilai = 1;
+//                 }
+
+//                 return $nilai;
+//     }
+
+//   private function spot_foto($spot)
+//   {
+//     $nilai =0;
+//     if($spot == 'Free')
+//     {
+//         $nilai = 2;
+//     }else{
+//         $nilai = 1;
+//     }
+
+//     return $nilai;
+//   }
+
+//   private function informasi($informasi)
+//   {
+//     $nilai = 0;
+//     if($informasi == 'Lengkap')
+//     {
+//         $nilai = 2;
+//     }else{
+//         $nilai = 1;
+//     }
+//   }
 
 }

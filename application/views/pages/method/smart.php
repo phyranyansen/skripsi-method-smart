@@ -29,21 +29,16 @@
                                                 <!-- Tab Alternatif -->
                                                 <div class="tab-content">
                                                     <div class="tab-pane active p-3" id="alternatif" role="tabpanel">
-                                                    <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:hidden;">
-                                                        <table  class="table table-bordered">
+                                                    <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:auto;">
+                                                        <table  class="table table-bordered" id="tbel-alternatif">
                                                             <thead>
-                                                            <tr>
-                                                               <td colspan="8">Data Objek Pariwisata</td> 
-                                                            </tr>
                                                             <tr style="background-color: whitesmoke;">
                                                                 <th style="width: 10px;">No.</th>
                                                                 <th>Kode Alternatif</th>
                                                                 <th>Alternatif</th>
-                                                                <th>K1</th>
-                                                                <th>K2</th>
-                                                                <th>K3</th>
-                                                                <th>K4</th>
-                                                                <th>K5</th>
+                                                                <?php for($i =1; $i<=count($kriteria); $i++){ ?>
+                                                                <th>K<?= $i; ?></th>
+                                                                <?php } ?>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -62,11 +57,18 @@
                                                                 <td>Jam <?= $row['Jam_Operasional'] ?></td>
                                                                 <td><?= $row['Aksebility'] ?></td>
                                                                 <td><?= $row['Fasilitas'] ?></td>
+                                                                <td><?= $row['Penjualan_Tiket'] ?></td>
+                                                                <td><?= $row['Metode_Pembayaran'] ?></td>
+                                                                <td><?= $row['Akses_Wifi'] ?></td>
+                                                                <td><?= $row['Informasi_Event'] ?></td>
+                                                                <td><?= $row['Informasi_Diskon'] ?></td>
+                                                                <td><?= $row['Spot_Foto'] ?></td>
+                                                                <td><?= $row['Informasi'] ?></td>
                                                                 </tr>
                                                                 <?php } }else{ ?>
-                                                                 <tr>
-                                                                    <td colspan="8" style="text-align: center;">Data Not Available!</td>
-                                                                 </tr>
+                                                                 <!-- <tr>
+                                                                    <td colspan="15" style="text-align: center;">Data Not Available!</td>
+                                                                 </tr> -->
                                                                <?php } ?>
                                                             </tbody>
                                                         </table>
@@ -79,17 +81,15 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                         <tr>
-                                                            <td colspan="8">Penilaian / Rate, Setiap Objek Wisata Berdasarkan Kriteria Yang Telah Ditentukan.</td> 
+                                                            <td colspan="15">Penilaian / Rate, Setiap Objek Wisata Berdasarkan Kriteria Yang Telah Ditentukan.</td> 
                                                         </tr>
                                                         <tr style="background-color: whitesmoke;">
                                                             <th style="width: 10px;">No.</th>
                                                             <th>Kode Alternatif</th>
                                                             <th>Alternatif</th>
-                                                            <th>K1</th>
-                                                            <th>K2</th>
-                                                            <th>K3</th>
-                                                            <th>K4</th>
-                                                            <th>K5</th>
+                                                           <?php for($i =1; $i<=count($kriteria); $i++){ ?>
+                                                                <th>K<?= $i; ?></th>
+                                                                <?php } ?>
                                                         </tr>
                                                         </thead>
                                                         <tbody id="data-konversi">
@@ -99,11 +99,11 @@
                                                    </div>
                                                     </div>
                                                     <div class="tab-pane p-3" id="bobot" role="tabpanel">
-                                                   <div style="height: 500px;">
+                                                   <div style="width:100%;height:500px;overflow:scroll;overflow-y:scroll;overflow-x:auto;">
                                                     <table class="table table-bordered">
                                                         <thead>
                                                         <tr>
-                                                            <th colspan="7">
+                                                            <th colspan="14">
                                                                 NILAI BOBOT 
                                                                 <span class="float-right">
                                                         <a class="nav-link" data-toggle="dropdown" href="#">
@@ -125,11 +125,9 @@
                                                         </tr>
                                                         <tr style="background-color: whitesmoke;">
                                                             <th style="width: 10px;">No.</th>
-                                                            <th>K1</th>
-                                                            <th>K2</th>
-                                                            <th>K3</th>
-                                                            <th>K4</th>
-                                                            <th>K5</th>
+                                                              <?php for($i =1; $i<=count($kriteria); $i++){ ?>
+                                                                <th>K<?= $i; ?></th>
+                                                                <?php } ?>
                                                             <th>Total</th>
                                                         </tr>
                                                         </thead>
@@ -142,15 +140,13 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                         <tr>
-                                                            <th colspan="7">NORMALISASI BOBOT</th>
+                                                            <th colspan="14">NORMALISASI BOBOT</th>
                                                         </tr>
                                                         <tr style="background-color: whitesmoke;">
                                                             <th style="width: 10px;">No.</th>
-                                                            <th>K1</th>
-                                                            <th>K2</th>
-                                                            <th>K3</th>
-                                                            <th>K4</th>
-                                                            <th>K5</th>
+                                                            <?php for($i =1; $i<=count($kriteria); $i++){ ?>
+                                                                <th>K<?= $i; ?></th>
+                                                                <?php } ?>
                                                             <th>Total</th>
                                                         </tr>
                                                         </thead>
@@ -167,17 +163,15 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
-                                                                <td colspan="8">Menghitung Nilai Utility Dengan Mengkonvensikan Nilai masing-masing Dari Kriteria Data Objek Wisata</td>
+                                                                <td colspan="15">Menghitung Nilai Utility Dengan Mengkonvensikan Nilai masing-masing Dari Kriteria Data Objek Wisata</td>
                                                             </tr>
                                                         <tr  style="background-color: whitesmoke;">
                                                             <th style="width: 10px;">No.</th>
                                                             <th>Kode Alternatif</th>
                                                             <th>Alternatif</th>
-                                                            <th>K1</th>
-                                                            <th>K2</th>
-                                                            <th>K3</th>
-                                                            <th>K4</th>
-                                                            <th>K5</th>
+                                                              <?php for($i =1; $i<=count($kriteria); $i++){ ?>
+                                                                <th>K<?= $i; ?></th>
+                                                                <?php } ?>
                                                         </tr>
                                                         </thead>
                                                         <tbody id="data-utility">

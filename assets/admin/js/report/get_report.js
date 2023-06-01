@@ -81,3 +81,17 @@ $(document).ready(function() {
       }, 1000);
   
   })
+
+   //GET RESULT1
+$(document).ready(function() {
+  setInterval(function() {
+      $.ajax({
+        url: 'rp-result1',
+        method: 'GET',
+        success: function(response) {
+          $('#data-result1').html(response);
+        }
+      });
+    }, 1000);
+
+})

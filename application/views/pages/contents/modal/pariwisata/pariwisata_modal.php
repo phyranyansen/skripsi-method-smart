@@ -6,7 +6,7 @@
                                   <h5 class="modal-title mt-0" id="myLargeModalLabel">Upload Data</h5>
                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                          </div>
-                    <form class="" action="javascript:void(0);" id="wisata-upload" enctype="multipart/form-data">
+                    <form class="" action="upload-wisata"  enctype="multipart/form-data">
                        <div class="modal-body">
                             <div class="form-group">
                                     <label>Data Pariwisata</label>

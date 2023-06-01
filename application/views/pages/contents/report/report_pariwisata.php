@@ -84,38 +84,50 @@
             </tr>
             </table>
         </center>
+        <br>
+                <table class="table table-bordered">
+        <thead>
+                        <tr style="background-color: whitesmoke;">
+                            <th colspan="8">Rekomendasi Objek Pariwisata</th>
+                        </tr>
+                        <tr>
+                        <th colspan="2">No.</th>
+                        <th colspan="3">Nama Alternatif</th>
+                        <th colspan="3">Rank</th>
+                        <tr>
+                     </thead>
+                     <tbody id="data-result1">
+                        
+                    </tbody>
+        </table>
         <table  class="table table-bordered" id="export">
                  <thead>
                    <tr style="background-color: whitesmoke;">
-                    <th colspan="8">Data Alternatif</th> 
+                    <th colspan="15">Data Alternatif</th> 
                    </tr>
                    <tr>
                      <th style="width: 10px;">No.</th>
                      <th>Kode Alternatif</th>
                      <th>Alternatif</th>
-                     <th>K1</th>
-                     <th>K2</th>
-                     <th>K3</th>
-                     <th>K4</th>
-                     <th>K5</th>
-                   </tr>
+                     <?php for($i=1; $i<=count($kriteria); $i++){ ?>
+                        <th>K<?= $i ?></th>
+                    <?php } ?>
+                    </tr>
                      </thead>
                      <tbody id="alternatif">
                         
                     </tbody>
                      <thead>
                         <tr style="background-color: whitesmoke;">
-                            <th colspan="8">Konversi Nilai Kriteria Alternatif</th>
+                            <th colspan="15">Konversi Nilai Kriteria Alternatif</th>
                         </tr>
                     <tr>
                         <th style="width: 10px;">No.</th>
                         <th>Kode Alternatif</th>
                         <th>Alternatif</th>
-                        <th>K1</th>
-                        <th>K2</th>
-                        <th>K3</th>
-                        <th>K4</th>
-                        <th>K5</th>
+                        <?php for($i=1; $i<=count($kriteria); $i++){ ?>
+                        <th>K<?= $i ?></th>
+                    <?php } ?>
                     </tr
                      </thead>
                      <tbody id="konversi">
@@ -123,14 +135,13 @@
                     </tbody>
                     <thead>
                         <tr style="background-color: whitesmoke;">
-                            <th colspan="8">Nilai Bobot Kriteria</th>
+                            <th colspan="15">Nilai Bobot Kriteria</th>
                         </tr>
                         <tr>
                         <th colspan="1">K1</th>
-                        <th>K2</th>
-                        <th>K3</th>
-                        <th>K4</th>
-                        <th>K5</th>
+                       <?php for($i=1; $i<=count($kriteria); $i++){ ?>
+                        <th>K<?= $i ?></th>
+                    <?php } ?>
                         <th>Total</th>
                         </tr>
                      </thead>
@@ -139,7 +150,7 @@
                     </tbody>
                     <thead>
                         <tr style="background-color: whitesmoke;">
-                            <th colspan="8">Nilai Bobot Normalisasi</th>
+                            <th colspan="15">Nilai Bobot Normalisasi</th>
                         </tr>
                      </thead>
                      <tbody id="data-normalisasi">
@@ -147,17 +158,15 @@
                     </tbody>
                     <thead>
                         <tr style="background-color: whitesmoke;">
-                            <th colspan="8">Nilai Utility</th>
+                            <th colspan="15">Nilai Utility</th>
                         </tr>
                         <tr>
                         <th style="width: 10px;">No.</th>
                         <th>Kode Alternatif</th>
                         <th>Alternatif</th>
-                        <th>K1</th>
-                        <th>K2</th>
-                        <th>K3</th>
-                        <th>K4</th>
-                        <th>K5</th>
+                         <?php for($i=1; $i<=count($kriteria); $i++){ ?>
+                        <th>K<?= $i ?></th>
+                    <?php } ?>
                         </tr>
                      </thead>
                      <tbody id="data-utility">
@@ -166,7 +175,7 @@
                     </tbody>
                     <thead>
                         <tr style="background-color: whitesmoke;">
-                            <th colspan="8">Nilai Akhir</th>
+                            <th colspan="15">Nilai Akhir</th>
                         </tr>
                         <tr>
                         <th>No.</th>

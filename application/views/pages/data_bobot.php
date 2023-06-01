@@ -48,6 +48,7 @@
                                                             <th>Kode Kriteria</th>
                                                             <th>Nama Kriteria</th>
                                                             <th>Nilai Bobot</th>
+                                                            <th>Keterangan</th>
                                                             <?php if($this->session->userdata('Administrator')){ ?>
                                                             <th>Action</th>
                                                             <?php } ?>

@@ -115,6 +115,7 @@ $route['rp-bobot']            = 'report/report_bobot_table';
 $route['rp-normalisasi']      = 'report/repot_bobot_normalisasi_table';
 $route['rp-utility']          = 'report/get_utility_table';
 $route['rp-result']           = 'report/get_result_table';
+$route['rp-result1']           = 'report/get_result_table1';
 //Export Report
 $route['rp-export']           = 'report/export_pdf';
 

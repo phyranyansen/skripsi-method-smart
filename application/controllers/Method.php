@@ -22,12 +22,16 @@ class Method extends CI_Controller {
     public function index()
     {
 
+        //   echo "<pre>";
+        //   print_r($this->smart->get_utility());
+        //   echo "<pre>";
         $data['title']       = 'Method';
         $data['menu']        = $this->user->get_menu_where();
         $data['alternatif']  = $this->smart->get('pariwisata');
         $data['bobot']       = $this->smart->get_select_bobot();
         $data['utility']     = $this->smart->get_utility();
         $data['access']      = $this->user->get_menu_access();
+        $data['kriteria']    = $this->smart->get('kriteria');
         $this->load->view('templates/header', $data);
         $this->load->view('pages/method/smart', $data);
         $this->load->view('pages/contents/modal/bobot/bobot_modal', $data);
@@ -36,70 +40,63 @@ class Method extends CI_Controller {
     }
 
     //GET Konversi
-    function konversi()
-    {
-        $html = '';
-        $no = 1;
-        $query = $this->smart->get_konversi();
-        $k1 = [];
-        $k2 = [];
-        $k3 = [];
-        $k4 = [];
-        $k5 = [];
-    
-        foreach ($query as $row) {
-            $html .= '<tr>';
-            $html .= '<td>' . $no . '.</td>';
-            $html .= '<td>' . $row['Kode_Pariwisata'] . '</td>';
-            $html .= '<td>' . $row['Nama_Pariwisata'] . '</td>';
-            $html .= '<td>' . $row['K01'] . '</td>';
-            $html .= '<td>' . $row['K02'] . '</td>';
-            $html .= '<td>' . $row['K03'] . '</td>';
-            $html .= '<td>' . $row['K04'] . '</td>';
-            $html .= '<td>' . $row['K05'] . '</td>';
-            $html .= '</tr>';
-            $no++;
-    
-            $k1[] = $row['K01'];
-            $k2[] = $row['K02'];
-            $k3[] = $row['K03'];
-            $k4[] = $row['K04'];
-            $k5[] = $row['K05'];
+   function konversi()
+{
+    $html = '';
+    $no = 1;
+    $query = $this->smart->get_konversi();
+
+    $kriteriaColumns = array_keys($query[0]);
+    $kriteriaColumns = array_diff($kriteriaColumns, array('Kode_Pariwisata', 'Nama_Pariwisata')); // Menghapus kolom 'Kode_Pariwisata' dan 'Nama_Pariwisata'
+
+    $kriteriaMax = [];
+    $kriteriaMin = [];
+
+    foreach ($kriteriaColumns as $kriteria) {
+        $kriteriaValues = array_column($query, $kriteria);
+
+        if (!empty($kriteriaValues)) {
+            $kriteriaMax[$kriteria] = max($kriteriaValues);
+            $kriteriaMin[$kriteria] = min($kriteriaValues);
+        } else {
+            $kriteriaMax[$kriteria] = null;
+            $kriteriaMin[$kriteria] = null;
         }
-    
-        $max1 = max($k1);
-        $max2 = max($k2);
-        $max3 = max($k3);
-        $max4 = max($k4);
-        $max5 = max($k5);
-    
-        $min1 = min($k1);
-        $min2 = min($k2);
-        $min3 = min($k3);
-        $min4 = min($k4);
-        $min5 = min($k5);
-    
-        $html .= '<tr style="font-weight:bold; ">';
-        $html .= '<td colspan="3">Nilai Tertinggi (MAX)</td>';
-        $html .= '<td>' . $max1 . '</td>';
-        $html .= '<td>' . $max2 . '</td>';
-        $html .= '<td>' . $max3 . '</td>';
-        $html .= '<td>' . $max4 . '</td>';
-        $html .= '<td>' . $max5 . '</td>';
-        $html .= '</tr>';
-    
-        $html .= '<tr style="font-weight:bold">';
-        $html .= '<td colspan="3">Nilai Terendah (MIN)</td>';
-        $html .= '<td>' . $min1 . '</td>';
-        $html .= '<td>' . $min2 . '</td>';
-        $html .= '<td>' . $min3 . '</td>';
-        $html .= '<td>' . $min4 . '</td>';
-        $html .= '<td>' . $min5 . '</td>';
-        $html .= '</tr>';
-    
-        echo $html;
     }
-    
+
+    foreach ($query as $row) {
+        $html .= '<tr>';
+        $html .= '<td>' . $no . '.</td>';
+        $html .= '<td>' . $row['Kode_Pariwisata'] . '</td>';
+        $html .= '<td>' . $row['Nama_Pariwisata'] . '</td>';
+
+        foreach ($kriteriaColumns as $kriteria) {
+            $html .= '<td>' . $row[$kriteria] . '</td>';
+        }
+
+        $html .= '</tr>';
+        $no++;
+    }
+
+    $html .= '<tr style="font-weight:bold">';
+    $html .= '<td colspan="3">Nilai Tertinggi (MAX)</td>';
+    foreach ($kriteriaColumns as $kriteria) {
+        $html .= '<td>' . ($kriteriaMax[$kriteria] !== null ? $kriteriaMax[$kriteria] : '-') . '</td>';
+    }
+    $html .= '</tr>';
+
+    $html .= '<tr style="font-weight:bold">';
+    $html .= '<td colspan="3">Nilai Terendah (MIN)</td>';
+    foreach ($kriteriaColumns as $kriteria) {
+        $html .= '<td>' . ($kriteriaMin[$kriteria] !== null ? $kriteriaMin[$kriteria] : '-') . '</td>';
+    }
+    $html .= '</tr>';
+
+    echo $html;
+}
+
+
+
 
     //GET BOBOT
     function bobot()
@@ -108,14 +105,14 @@ class Method extends CI_Controller {
         $html = '';
         $no    = 1;
         $query = $this->smart->get_bobot();
+        $kriteria = count($this->smart->get('kriteria'));
         foreach ($query as $row) {
           $html .= '<tr>';
           $html .= '<td>'.$no.'.</td>';
-          $html .= '<td style="width: 20%;">'.$row['K01'].'%</td>';
-          $html .= '<td style="width: 15%;">'.$row['K02'].'%</td>';
-          $html .= '<td style="width: 20%;">'.$row['K03'].'%</td>';
-          $html .= '<td style="width: 15%;">'.$row['K04'].'%</td>';
-          $html .= '<td style="width: 15%;">'.$row['K05'].'%</td>';
+          for($i = 1; $i<=$kriteria; $i++) {
+
+              $html .= '<td style="width: 20%;">'.$row['K0'.$i.''].'%</td>';
+          }
           $html .= '<td style="width: 15%;">'.$row['Total'].'%</td>';
           $html .= '</tr>';
           $no++;
@@ -131,14 +128,13 @@ class Method extends CI_Controller {
         $html = '';
         $no    = 1;
         $query = $this->smart->get_bobot_normalisasi();
+        $kriteria = count($this->smart->get('kriteria'));
           foreach ($query as $row) {
             $html .= '<tr>';
             $html .= '<td>'.$no.'.</td>';
-            $html .= '<td style="width: 20%;">'.$row['K01'].'</td>';
-            $html .= '<td style="width: 15%;">'.$row['K02'].'</td>';
-            $html .= '<td style="width: 20%;">'.$row['K03'].'</td>';
-            $html .= '<td style="width: 15%;">'.$row['K04'].'</td>';
-            $html .= '<td style="width: 15%;">'.$row['K05'].'</td>';
+                for($i = 1; $i<=$kriteria; $i++) {
+            $html .= '<td style="width: 20%;">'.number_format($row['K01'], 2).'</td>';
+                }
             $html .= '<td style="width: 15%;">'.$row['Total'].'</td>';
             $html .= '</tr>';
             $no++;
@@ -155,17 +151,16 @@ class Method extends CI_Controller {
       $no    = 1;
       $result   = $this->smart->get_utility();
       $get_data = count($this->smart->get_konversi());
+      $kriteria = count($this->smart->get('kriteria'));
       for($i=0; $i<$get_data; $i++)
       {
               $html .= '<tr>';
               $html .= '<td>'.$no.'.</td>';
               $html .= '<td>'.$result['kode'][$i].'</td>';
               $html .= '<td>'.$result['nama'][$i].'</td>';
-              $html .= '<td>'.$result['K01'][$i].'</td>';
-              $html .= '<td>'.$result['K02'][$i].'</td>';
-              $html .= '<td>'.$result['K03'][$i].'</td>';
-              $html .= '<td>'.$result['K04'][$i].'</td>';
-              $html .= '<td>'.$result['K05'][$i].'</td>';
+              for($j = 1; $j<=$kriteria; $j++) {
+              $html .= '<td>'.$result['K0'.$j.''][$i].'</td>';
+              }
               $html .= '</tr>';
               $no++;
           

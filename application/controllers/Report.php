@@ -28,6 +28,7 @@ class Report extends CI_Controller {
     {
         $data['title']     = 'Laporan';
         $data['menu']      = $this->user->get_menu_where();
+      
         $data['list']      = $this->report->get();
         $data['wisata']    = $this->wisata->get();
         $this->load->view('templates/header', $data);
@@ -84,6 +85,7 @@ class Report extends CI_Controller {
         $data['list']     = $this->report->get_wisata();
         $data['title']    = 'Pariwisata';
         $data['wisata']   = $this->wisata->get();
+          $data['kriteria']  = $this->smart->get('kriteria');
         $data['kode']     = 'RP-WST';
         $data['utility']  = $this->report->get_utility();
         $this->load->view('pages/contents/report/templates/header', $data);
@@ -114,6 +116,13 @@ class Report extends CI_Controller {
                 $html .= '<td> Jam '.$row['Jam_Operasional'].'</td>';
                 $html .= '<td>'.$row['Aksebility'].'</td>';
                 $html .= '<td>'.$row['Fasilitas'].'</td>';
+                $html .= '<td>'.$row['Penjualan_Tiket'].'</td>';
+                $html .= '<td>'.$row['Metode_Pembayaran'].'</td>';
+                $html .= '<td>'.$row['Akses_Wifi'].'</td>';
+                $html .= '<td>'.$row['Informasi_Event'].'</td>';
+                $html .= '<td>'.$row['Informasi_Diskon'].'</td>';
+                $html .= '<td>'.$row['Spot_Foto'].'</td>';
+                $html .= '<td>'.$row['Informasi'].'</td>';
                 $html .= '</tr>';
                 $no++;
             
@@ -121,70 +130,57 @@ class Report extends CI_Controller {
         echo $html;
     }
 
-    public function report_konversi_table()
-    {
-      
-        $html = '';
-        $no = 1;
-        $query = $this->report->get_konversi();
-        $k1 = [];
-        $k2 = [];
-        $k3 = [];
-        $k4 = [];
-        $k5 = [];
-    
-        foreach ($query as $row) {
-            $html .= '<tr>';
-            $html .= '<td>' . $no . '.</td>';
-            $html .= '<td>' . $row['Kode_Pariwisata'] . '</td>';
-            $html .= '<td>' . $row['Nama_Pariwisata'] . '</td>';
-            $html .= '<td>' . $row['K01'] . '</td>';
-            $html .= '<td>' . $row['K02'] . '</td>';
-            $html .= '<td>' . $row['K03'] . '</td>';
-            $html .= '<td>' . $row['K04'] . '</td>';
-            $html .= '<td>' . $row['K05'] . '</td>';
-            $html .= '</tr>';
-            $no++;
-    
-            $k1[] = $row['K01'];
-            $k2[] = $row['K02'];
-            $k3[] = $row['K03'];
-            $k4[] = $row['K04'];
-            $k5[] = $row['K05'];
+   public function report_konversi_table()
+{
+    $html = '';
+    $no = 1;
+    $query = $this->smart->get_konversi();
+    $kriteria = [];
+
+    foreach ($query as $row) {
+        $html .= '<tr>';
+        $html .= '<td>' . $no . '.</td>';
+        $html .= '<td>' . $row['Kode_Pariwisata'] . '</td>';
+        $html .= '<td>' . $row['Nama_Pariwisata'] . '</td>';
+
+        // Loop untuk kolom kriteria
+        for ($i = 1; $i <= count($row) - 2; $i++) {
+            $kodeKriteria = ($i >= 10) ? 'K' . str_pad($i, 3, '0', STR_PAD_LEFT) : 'K' . str_pad($i, 2, '0', STR_PAD_LEFT);
+            $html .= '<td>' . $row[$kodeKriteria] . '</td>';
+
+            // Menyimpan nilai kriteria dalam array
+            $kriteria[$i][] = $row[$kodeKriteria];
         }
-    
-        $max1 = max($k1);
-        $max2 = max($k2);
-        $max3 = max($k3);
-        $max4 = max($k4);
-        $max5 = max($k5);
-    
-        $min1 = min($k1);
-        $min2 = min($k2);
-        $min3 = min($k3);
-        $min4 = min($k4);
-        $min5 = min($k5);
-    
-        $html .= '<tr style="background-color:khaki;">';
-        $html .= '<td colspan="3">Nilai Tertinggi (MAX)</td>';
-        $html .= '<td>' . $max1 . '</td>';
-        $html .= '<td>' . $max2 . '</td>';
-        $html .= '<td>' . $max3 . '</td>';
-        $html .= '<td>' . $max4 . '</td>';
-        $html .= '<td>' . $max5 . '</td>';
+
         $html .= '</tr>';
-    
-        $html .= '<tr style="background-color:lightblue">';
-        $html .= '<td colspan="3">Nilai Terendah (MIN)</td>';
-        $html .= '<td>' . $min1 . '</td>';
-        $html .= '<td>' . $min2 . '</td>';
-        $html .= '<td>' . $min3 . '</td>';
-        $html .= '<td>' . $min4 . '</td>';
-        $html .= '<td>' . $min5 . '</td>';
-        $html .= '</tr>';
-    
-        echo $html;
+        $no++;
     }
+
+    $html .= '<tr style="background-color:khaki;">';
+    $html .= '<td colspan="3">Nilai Tertinggi (MAX)</td>';
+
+    // Loop untuk nilai maksimum kriteria
+    for ($i = 1; $i <= count($kriteria); $i++) {
+        $max = max($kriteria[$i]);
+        $html .= '<td>' . $max . '</td>';
+    }
+
+    $html .= '</tr>';
+
+    $html .= '<tr style="background-color:lightblue">';
+    $html .= '<td colspan="3">Nilai Terendah (MIN)</td>';
+
+    // Loop untuk nilai minimum kriteria
+    for ($i = 1; $i <= count($kriteria); $i++) {
+        $min = min($kriteria[$i]);
+        $html .= '<td>' . $min . '</td>';
+    }
+
+    $html .= '</tr>';
+
+    echo $html;
+}
+
 
 
     //GET BOBOT
@@ -194,19 +190,21 @@ class Report extends CI_Controller {
         $html = '';
         $no    = 1;
         $query = $this->smart->get_bobot();
+        $kriteria = count($this->smart->get('kriteria'));
         foreach ($query as $row) {
           $html .= '<tr>';
-          $html .= '<td colspan="1" style="width: 20%;">'.$row['K01'].'%</td>';
-          $html .= '<td style="width: 15%;">'.$row['K02'].'%</td>';
-          $html .= '<td style="width: 20%;">'.$row['K03'].'%</td>';
-          $html .= '<td style="width: 15%;">'.$row['K04'].'%</td>';
-          $html .= '<td style="width: 15%;">'.$row['K05'].'%</td>';
+          $html .= '<td>'.$no.'.</td>';
+          for($i = 1; $i<=$kriteria; $i++) {
+
+              $html .= '<td style="width: 20%;">'.$row['K0'.$i.''].'%</td>';
+          }
           $html .= '<td style="width: 15%;">'.$row['Total'].'%</td>';
           $html .= '</tr>';
           $no++;
         
         }
        echo $html;
+       
 
     }
 
@@ -216,13 +214,13 @@ class Report extends CI_Controller {
         $html = '';
         $no    = 1;
         $query = $this->smart->get_bobot_normalisasi();
+        $kriteria = count($this->smart->get('kriteria'));
           foreach ($query as $row) {
             $html .= '<tr>';
-            $html .= '<td colspan="1" style="width: 20%;">'.$row['K01'].'%</td>';
-            $html .= '<td style="width: 15%;">'.$row['K02'].'%</td>';
-            $html .= '<td style="width: 20%;">'.$row['K03'].'%</td>';
-            $html .= '<td style="width: 15%;">'.$row['K04'].'%</td>';
-            $html .= '<td style="width: 15%;">'.$row['K05'].'%</td>';
+            $html .= '<td>'.$no.'.</td>';
+             for($i = 1; $i<=$kriteria; $i++) {
+                    $html .= '<td colspan="1" style="width: 20%;">'.number_format($row['K0'.$i.''], 2).'%</td>';
+             }
             $html .= '<td style="width: 15%;">'.$row['Total'].'%</td>';
             $html .= '</tr>';
             $no++;
@@ -235,26 +233,25 @@ class Report extends CI_Controller {
       //GET UTILITY
       function get_utility_table()
       {
-        $html = '';
-        $no    = 1;
-        $result   = $this->report->get_utility();
-        $get_data = count($this->report->get_konversi());
-        for($i=0; $i<$get_data; $i++)
-        {
-                $html .= '<tr>';
-                $html .= '<td>'.$no.'.</td>';
-                $html .= '<td>'.$result['kode'][$i].'</td>';
-                $html .= '<td>'.$result['nama'][$i].'</td>';
-                $html .= '<td>'.$result['K01'][$i].'</td>';
-                $html .= '<td>'.$result['K02'][$i].'</td>';
-                $html .= '<td>'.$result['K03'][$i].'</td>';
-                $html .= '<td>'.$result['K04'][$i].'</td>';
-                $html .= '<td>'.$result['K05'][$i].'</td>';
-                $html .= '</tr>';
-                $no++;
-            
-          }
-       echo $html;
+         $html = '';
+      $no    = 1;
+      $result   = $this->smart->get_utility();
+      $get_data = count($this->smart->get_konversi());
+      $kriteria = count($this->smart->get('kriteria'));
+      for($i=0; $i<$get_data; $i++)
+      {
+              $html .= '<tr>';
+              $html .= '<td>'.$no.'.</td>';
+              $html .= '<td>'.$result['kode'][$i].'</td>';
+              $html .= '<td>'.$result['nama'][$i].'</td>';
+              for($j = 1; $j<=$kriteria; $j++) {
+              $html .= '<td>'.$result['K0'.$j.''][$i].'</td>';
+              }
+              $html .= '</tr>';
+              $no++;
+          
+        }
+     echo $html;
         
       }
       
@@ -298,6 +295,39 @@ class Report extends CI_Controller {
         echo $html;
       }
 
-      
+        function get_result_table1()
+        {
+           $html = '';
+           $no  = 1;
+           $nilai = [];
+           $rank  = [];
+           $result = $this->report->get_result();
+           $get_data = count($this->report->get_konversi());
+           for($i=0; $i<$get_data; $i++)
+           {
+              $nilai[] = $result['nilai'][$i];
+              $rank[]  = $result['rank'][$i];
+                      
+           }
+    
+           $min1 = min($nilai);
+           $max1 = max($nilai);
+           
+           $min2 = min($rank);
+           $max2 = max($rank);
+    
+           for($i=0; $i<$get_data; $i++)
+           {
+             //if($result['rank'][$i]==5)
+                        $html .= '<tr style="background-color: whitesmoke;">';
+                        $html .= '<td colspan="2" >'.$no.'.</td>';
+                        $html .= '<td colspan="3" >'.$result['nama'][$i].'</td>';
+                        $html .= '<td colspan="3" >'.$result['rank'][$i].'</td>';
+                        $html .= '</tr>';
+                        $no++;
+         }
+                       
+          echo $html;
+        }
     
 }
