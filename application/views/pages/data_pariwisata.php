@@ -47,6 +47,14 @@
                                                     <th>Jam Operasional</th>
                                                     <th>Aksebility</th>
                                                     <th>Fasilitas</th>
+                                                    <th>Penjualan Tiket</th>
+                                                    <th>Metode Pembayaran</th>
+                                                    <th>Akses Wifi</th>
+                                                    <th>Informasi Event</th>
+                                                    <th>Informasi Diskon</th>
+                                                    <th>Spot Foto</th>
+                                                    <th>Informasi</th>
+
                                                     <?php if($access['UpdateStatus']==1 || $access['DeleteStatus']==1){ ?>
                                                     <th style="text-align: center; width: 10%;">Action</th>
                                                     <?php } ?>
@@ -65,6 +73,13 @@
                                                     <td>Jam <?= $row['Jam_Operasional'] ?></td>
                                                     <td><?= $row['Aksebility'] ?></td>
                                                     <td><?= $row['Fasilitas'] ?></td>
+                                                     <td><?= $row['Penjualan_Tiket'] ?></td>
+                                                    <td><?= $row['Metode_Pembayaran'] ?></td>
+                                                    <td><?= $row['Akses_Wifi'] ?></td>
+                                                    <td><?= $row['Informasi_Event'] ?></td>
+                                                    <td><?= $row['Informasi_Diskon'] ?></td>
+                                                    <td><?= $row['Spot_Foto'] ?></td>
+                                                    <td><?= $row['Informasi'] ?></td>
                                                     <?php if($access['UpdateStatus']==1 || $access['DeleteStatus']==1){ ?>
                                                     <td style="text-align: center; width: 10%;">
                                                      <?php if($access['UpdateStatus']==1){ ?>
