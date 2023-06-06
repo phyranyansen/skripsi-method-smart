@@ -297,10 +297,10 @@ private function nilai_akhir()
                
                 $explode_penjualan  = explode(', ', $row['Penjualan_Tiket']);
                 $explode_pembayaran = explode(', ', $row['Metode_Pembayaran']);
-                $explode_akses_wifi = explode(', ', $row['Akses_Wifi']);
+                // $explode_akses_wifi = explode(', ', $row['Akses_Wifi']);
                 $explode_informasi_event = explode(', ', $row['Informasi_Event']);
                 $explode_diskon     = explode(', ', $row['Informasi_Diskon']);
-                $explode_spot       = explode(', ', $row['Spot_Foto']);
+                // $explode_spot       = explode(', ', $row['Spot_Foto']);
                 $explode_informasi     = explode(', ', $row['Informasi']);
                 
         
@@ -365,7 +365,7 @@ private function nilai_akhir()
                 
                 $data[] = [
                     'Kode_Pariwisata' => $row['Kode_Pariwisata'],
-                    'Nilai' => count($explode_akses_wifi),
+                    'Nilai' => $this->akses_wifi($row['Akses_Wifi']),
                     'Kode_Kriteria' => 'K08',
                     'CreatedBy' => 0,
                     'CreatedDate' => date('Y-m-d')
@@ -389,7 +389,7 @@ private function nilai_akhir()
                 
                 $data[] = [
                     'Kode_Pariwisata' => $row['Kode_Pariwisata'],
-                    'Nilai' => count($explode_spot),
+                    'Nilai' => $this->spot_foto($row['Spot_Foto']),
                     'Kode_Kriteria' => 'K011',
                     'CreatedBy' => 0,
                     'CreatedDate' => date('Y-m-d')
@@ -426,10 +426,10 @@ private function nilai_akhir()
 
                 $explode_penjualan  = explode(', ', $row['Penjualan_Tiket']);
                 $explode_pembayaran = explode(', ', $row['Metode_Pembayaran']);
-                $explode_akses_wifi = explode(', ', $row['Akses_Wifi']);
+                // $explode_akses_wifi =  $row['Akses_Wifi'];
                 $explode_informasi_event = explode(', ', $row['Informasi_Event']);
                 $explode_diskon     = explode(', ', $row['Informasi_Diskon']);
-                $explode_spot       = explode(', ', $row['Spot_Foto']);
+                // $explode_spot       = $row['Spot_Foto'];
                 $explode_informasi     = explode(', ', $row['Informasi']);
                 
         
@@ -494,7 +494,7 @@ private function nilai_akhir()
                 
                 $data[] = [
                     'Kode_Pariwisata' => $row['Kode_Pariwisata'],
-                    'Nilai' => count($explode_akses_wifi),
+                    'Nilai' => $this->akses_wifi($row['Akses_Wifi']),
                     'Kode_Kriteria' => 'K08',
                     'CreatedBy' => 0,
                     'CreatedDate' => date('Y-m-d')
@@ -518,7 +518,7 @@ private function nilai_akhir()
                 
                 $data[] = [
                     'Kode_Pariwisata' => $row['Kode_Pariwisata'],
-                    'Nilai' => count($explode_spot),
+                    'Nilai' => $this->spot_foto($row['Spot_Foto']),
                     'Kode_Kriteria' => 'K011',
                     'CreatedBy' => 0,
                     'CreatedDate' => date('Y-m-d')
@@ -597,6 +597,33 @@ private function nilai_akhir()
     }
 
 
+ private function akses_wifi($akses)
+    {
+        $nilai = 0;
+        if($akses == 'Ada')
+        {
+            $nilai = 2;
+        }else{
+            $nilai = 1;
+        }
+
+        return $nilai;
+    }
+
+
+ private function spot_foto($spot)
+  {
+    $nilai =0;
+    if($spot == 'Free')
+    {
+        $nilai = 2;
+    }else{
+        $nilai = 1;
+    }
+
+    return $nilai;
+  }
+
 //     private function penjualan_tiket($penjualan) {
 //         $nilai = 0;
 //         if($penjualan == 'Lengkap')
@@ -628,19 +655,7 @@ private function nilai_akhir()
 //         return $nilai;
 //     }
 
-//     private function akses_wifi($akses)
-//     {
-//         $nilai = 0;
-//         if($akses == 'Ada')
-//         {
-//             $nilai = 2;
-//         }else{
-//             $nilai = 1;
-//         }
-
-//         return $nilai;
-//     }
-
+   
 //     private function informasi_event($informasi)
 //     {
 //         $nilai = 0;
@@ -673,18 +688,7 @@ private function nilai_akhir()
 //                 return $nilai;
 //     }
 
-//   private function spot_foto($spot)
-//   {
-//     $nilai =0;
-//     if($spot == 'Free')
-//     {
-//         $nilai = 2;
-//     }else{
-//         $nilai = 1;
-//     }
 
-//     return $nilai;
-//   }
 
 //   private function informasi($informasi)
 //   {

@@ -74,7 +74,54 @@
                                               <textarea name="fasilitas" required class="form-control" rows="1"></textarea>          
                                              </div>
                                            </div>
-                                     
+                                        <div class="form-group">
+                                              <label>Penjualan Tiket</label>
+                                              <div>
+                                                <input type="text" name="penjualan_tiket" class="form-control" required placeholder="Penjualan Tiket.."/>
+                                                </div>
+                                           </div>
+                                        <div class="form-group">
+                                              <label>Metode Pembayaran</label>
+                                              <div>
+                                               <textarea name="metode_pembayaran" required class="form-control" rows="1"></textarea>   
+                                                </div>
+                                           </div>
+                                        <div class="form-group">
+                                              <label>Akses Free Wifi</label>
+                                              <div>
+                                                <select class="form-control select2" name="akses_wifi" style="width: 100%;">
+                                                  <option value="Ada">Ada</option>
+                                                  <option value="Tidak Ada">Tidak Ada</option>
+                                                  </select>
+                                                </div>
+                                           </div>
+                                        <div class="form-group">
+                                              <label>Informasi Event</label>
+                                              <div>
+                                                <input type="text" name="informasi_event" class="form-control" required placeholder="Informasi Event.."/>
+                                                </div>
+                                           </div>
+                                        <div class="form-group">
+                                              <label>Informasi Diskon</label>
+                                              <div>
+                                                <input type="text" name="informasi_diskon" class="form-control" required placeholder="Informasi Diskon.."/>
+                                                </div>
+                                           </div>
+                                        <div class="form-group">
+                                              <label>Spot Foto</label>
+                                              <div>
+                                                 <select class="form-control select2" name="spot_foto" style="width: 100%;">
+                                                  <option value="Free">Free</option>
+                                                  <option value="Berbayar">Berbayar</option>
+                                                  </select>
+                                                </div>
+                                           </div>
+                                            <div class="form-group">
+                                              <label>Informasi</label>
+                                              <div>
+                                                <input type="text" name="informasi" class="form-control" required placeholder="Informasi.."/>
+                                                </div>
+                                           </div>
                                 </div>
                                 <div class="modal-footer">
                                      <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
@@ -135,7 +182,54 @@
                                                         <textarea name="fasilitas" required class="form-control" rows="1" id="fasilitas"></textarea>          
                                                        </div>
                                                      </div>
-                                               
+                                                 <div class="form-group">
+                                              <label>Penjualan Tiket</label>
+                                              <div>
+                                                <input type="text" name="penjualan_tiket" class="form-control" required placeholder="Penjualan Tiket.." id="penjualan_tiket"/>
+                                                </div>
+                                           </div>
+                                             <div class="form-group">
+                                                  <label>Metode Pembayaran</label>
+                                                  <div>
+                                                  <textarea name="metode_pembayaran" required class="form-control" rows="1" id="metode_pembayaran"></textarea>   
+                                                  </div>
+                                             </div>
+                                             <div class="form-group">
+                                                  <label>Akses Free Wifi</label>
+                                                  <div>
+                                                  <select class="form-control select2" name="akses_wifi" style="width: 100%;">
+                                                       <option value="Ada">Ada</option>
+                                                       <option value="Tidak Ada">Tidak Ada</option>
+                                                       </select>
+                                                  </div>
+                                             </div>
+                                             <div class="form-group">
+                                                  <label>Informasi Event</label>
+                                                  <div>
+                                                  <input type="text" name="informasi_event" class="form-control" required placeholder="Informasi Event.." id="informasi_event"/>
+                                                  </div>
+                                             </div>
+                                             <div class="form-group">
+                                                  <label>Informasi Diskon</label>
+                                                  <div>
+                                                  <input type="text" name="informasi_diskon" class="form-control" required placeholder="Informasi Diskon.." id="informasi_diskon"/>
+                                                  </div>
+                                             </div>
+                                             <div class="form-group">
+                                                  <label>Spot Foto</label>
+                                                  <div>
+                                                  <select class="form-control select2" name="spot_foto" style="width: 100%;">
+                                                       <option value="Free">Free</option>
+                                                       <option value="Berbayar">Berbayar</option>
+                                                       </select>
+                                                  </div>
+                                             </div>
+                                             <div class="form-group">
+                                                  <label>Informasi</label>
+                                                  <div>
+                                                  <input type="text" name="informasi" class="form-control" required placeholder="Informasi.." id="informasi"/>
+                                                  </div>
+                                             </div>
                                           </div>
                                           <div class="modal-footer">
                                                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>

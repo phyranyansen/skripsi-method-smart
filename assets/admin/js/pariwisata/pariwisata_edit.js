@@ -20,6 +20,11 @@ $(document).ready(function() {
                   $('#jam_operasional').val(msg.data.jam);
                   $('#aksebility').val(msg.data.akses);
                   $('#fasilitas').val(msg.data.fasilitas);
+                  $('#penjualan_tiket').val(msg.data.penjualan_tiket);
+                  $('#metode_pembayaran').val(msg.data.metode_pembayaran);
+                  $('#informasi_event').val(msg.data.informasi_event);
+                  $('#informasi_diskon').val(msg.data.penjualan_tiket);
+                  $('#informasi').val(msg.data.informasi);
                   console.log(msg.data.kode);
                }else{
                 Swal.fire('Failed!', msg.pesan, 'error');
