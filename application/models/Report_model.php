@@ -27,93 +27,107 @@ class Report_Model extends CI_Model {
         $kode  = implode(',', $where);
         if($kode=='semua')
         {
-            $query = $this->db->query("SELECT a.Kode_Pariwisata, b.Nama_Pariwisata, 
-                (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K01' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K01,
-                (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K02' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K02,
-                (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K03' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K03,
-                (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K04' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K04,
-                (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K05' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K05
-            FROM pariwisata b 
-            LEFT JOIN konversi a ON b.Kode_Pariwisata = a.Kode_Pariwisata
-            GROUP BY a.Kode_Pariwisata, b.Nama_Pariwisata
-            ORDER BY a.Id_Konversi;");
+             $query = "SELECT 
+                a.Kode_Pariwisata, 
+                b.Nama_Pariwisata";
+
+                    $kriteria = $this->smart->get('kriteria');
+                    $numCriteria = count($kriteria);
+                    for ($i = 1; $i <= $numCriteria; $i++) {
+                        $kodeKriteria = ($i >= 10) ? 'K' . str_pad($i, 3, '0', STR_PAD_LEFT) : 'K' . str_pad($i, 2, '0', STR_PAD_LEFT);
+                        $query .= ", MAX(CASE WHEN x.Kode_Kriteria = '$kodeKriteria' THEN x.Nilai ELSE 0 END) AS $kodeKriteria";
+                    }
+
+                    $query .= " FROM 
+                        pariwisata b 
+                        LEFT JOIN konversi a ON b.Kode_Pariwisata = a.Kode_Pariwisata 
+                        LEFT JOIN konversi x ON a.Kode_Pariwisata = x.Kode_Pariwisata 
+                    GROUP BY 
+                        a.Kode_Pariwisata, 
+                        b.Nama_Pariwisata 
+                    ORDER BY 
+                        a.Id_Konversi;";
+           $result = $this->db->query($query);
+
         }else{
-                $query = $this->db->query("SELECT a.Kode_Pariwisata, b.Nama_Pariwisata, 
-                (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K01' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K01,
-                (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K02' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K02,
-                (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K03' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K03,
-                (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K04' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K04,
-                (SELECT x.Nilai FROM konversi x WHERE x.Kode_Kriteria = 'K05' AND x.Kode_Pariwisata = a.Kode_Pariwisata) AS K05
-            FROM pariwisata b 
-            LEFT JOIN konversi a ON b.Kode_Pariwisata = a.Kode_Pariwisata
-            WHERE FIND_IN_SET(a.Kode_Pariwisata, '$kode') > 0
-            GROUP BY a.Kode_Pariwisata, b.Nama_Pariwisata
-            ORDER BY a.Id_Konversi;");
+
+            $query = "SELECT 
+            a.Kode_Pariwisata, 
+            b.Nama_Pariwisata";
+
+                $kriteria = $this->smart->get('kriteria');
+                $numCriteria = count($kriteria);
+                for ($i = 1; $i <= $numCriteria; $i++) {
+                    $kodeKriteria = ($i >= 10) ? 'K' . str_pad($i, 3, '0', STR_PAD_LEFT) : 'K' . str_pad($i, 2, '0', STR_PAD_LEFT);
+                    $query .= ", MAX(CASE WHEN x.Kode_Kriteria = '$kodeKriteria' THEN x.Nilai ELSE 0 END) AS $kodeKriteria";
+                }
+
+                $query .= " FROM 
+                    pariwisata b 
+                    LEFT JOIN konversi a ON b.Kode_Pariwisata = a.Kode_Pariwisata 
+                    LEFT JOIN konversi x ON a.Kode_Pariwisata = x.Kode_Pariwisata 
+                    WHERE FIND_IN_SET(a.Kode_Pariwisata, '$kode') > 0
+                GROUP BY 
+                    a.Kode_Pariwisata, 
+                    b.Nama_Pariwisata 
+                ORDER BY 
+                    a.Id_Konversi;";
+            $result = $this->db->query($query);
         }
         
-        return $query->result_array();
+        return $result->result_array();
     }
     
        //GET Utility Value process
-    function get_utility() {
-        
-        $k1 = [];
-        $k2 = [];
-        $k3 = [];
-        $k4 = [];
-        $k5 = [];
-        
-      $result = [];  
-      $query = $this->get_konversi();
-      
-      if(!empty($query)){
-        foreach($query as $row) {
-    
-          $k1[] = $row['K01'];
-          $k2[] = $row['K02'];
-          $k3[] = $row['K03'];
-          $k4[] = $row['K04'];
-          $k5[] = $row['K05'];
-    
-        }
-    
-        $max1 = max($k1);
-        $max2 = max($k2);
-        $max3 = max($k3);
-        $max4 = max($k4);
-        $max5 = max($k5);
-    
-        $min1 = min($k1);
-        $min2 = min($k2);
-        $min3 = min($k3);
-        $min4 = min($k4);
-        $min5 = min($k5);
-    
-        foreach($query as $row) {
-    
-            $result['K01'][] = $this->utility($row['K01'], $min1, $max1);
-            $result['K02'][] = $this->utility($row['K02'], $min2, $max2);
-            $result['K03'][] = $this->utility($row['K03'], $min3, $max3);
-            $result['K04'][] = $this->utility($row['K04'], $min4, $max4);
-            $result['K05'][] = $this->utility($row['K05'], $min5, $max5); 
-            $result['kode'][] = $row['Kode_Pariwisata'];
-            $result['nama'][] = $row['Nama_Pariwisata'];
-        }
-    
-        $array_result = [
-            'K01'   => $result['K01'],
-            'K02'   => $result['K02'],
-            'K03'   => $result['K03'],
-            'K04'   => $result['K04'],
-            'K05'   => $result['K05'],
-            'kode'  => $result['kode'],
-            'nama'  => $result['nama']
-        ];
-    
-        return $array_result;
+     function get_utility()
+    {
+        $get_kriteria = $this->db->get('kriteria')->result_array();
+        $numCriteria = count($get_kriteria);
+        $criteria = [];
+        $result = [];
+        $query = $this->get_konversi();
 
-      }
-  }   
+        if (!empty($query)) {
+            for ($i = 1; $i <= $numCriteria; $i++) {
+                $kriteria = ($i >= 10) ? 'K' . str_pad($i, 3, '0', STR_PAD_LEFT) : 'K' . str_pad($i, 2, '0', STR_PAD_LEFT);
+                $criteria[$kriteria] = [];
+            }
+
+            foreach ($query as $row) {
+                for ($i = 1; $i <= $numCriteria; $i++) {
+                    $kriteria = ($i >= 10) ? 'K' . str_pad($i, 3, '0', STR_PAD_LEFT) : 'K' . str_pad($i, 2, '0', STR_PAD_LEFT);
+                    $criteria[$kriteria][] = $row[$kriteria];
+                }
+            }
+
+            foreach ($criteria as $kriteria => $values) {
+                $max = max($values);
+                $min = min($values);
+
+                foreach ($query as $row) {
+                    $result[$kriteria][] = $this->utility($row[$kriteria], $min, $max);
+                }
+            }
+
+            foreach ($query as $row) {
+                $result['kode'][] = $row['Kode_Pariwisata'];
+                $result['nama'][] = $row['Nama_Pariwisata'];
+            }
+
+            $array_result = [
+                'kode' => $result['kode'],
+                'nama' => $result['nama']
+            ];
+
+            foreach ($result as $kriteria => $values) {
+                if ($kriteria !== 'kode' && $kriteria !== 'nama') {
+                    $array_result[$kriteria] = $values;
+                }
+            }
+
+            return $array_result;
+        }
+    }
 
   
   private function utility($out, $min, $max)

@@ -26,6 +26,10 @@ class Report extends CI_Controller {
 
     public function index()
     {
+        // echo "<pre>";
+        // print_r($this->report->get_utility());
+        // echo "<pre>";
+
         $data['title']     = 'Laporan';
         $data['menu']      = $this->user->get_menu_where();
       
@@ -93,7 +97,9 @@ class Report extends CI_Controller {
         $this->load->view('pages/contents/report/modal/modal_report_pariwisata', $data);
 		$this->load->view('pages/contents/report/templates/footer');
     }
-
+  //-----------------------------------------------------------------------------------------
+  //TABLE ALTERNATIF PARIWISATA -----------------------------------------------------------------------------------------------
+  //GET ALTERNATIF
     public function report_wisata_table()
     {
         $query = $this->report->get_wisata();
@@ -129,60 +135,62 @@ class Report extends CI_Controller {
          }
         echo $html;
     }
-
+  //-----------------------------------------------------------------------------------------
+  //TABLE KONVERSI NILAI -----------------------------------------------------------------------------------------------
+  //GET KONVERSI
    public function report_konversi_table()
-{
-    $html = '';
-    $no = 1;
-    $query = $this->smart->get_konversi();
-    $kriteria = [];
+    {
+        $html = '';
+        $no = 1;
+        $query = $this->report->get_konversi();
+        $kriteria = [];
 
-    foreach ($query as $row) {
-        $html .= '<tr>';
-        $html .= '<td>' . $no . '.</td>';
-        $html .= '<td>' . $row['Kode_Pariwisata'] . '</td>';
-        $html .= '<td>' . $row['Nama_Pariwisata'] . '</td>';
+        foreach ($query as $row) {
+            $html .= '<tr>';
+            $html .= '<td>' . $no . '.</td>';
+            $html .= '<td>' . $row['Kode_Pariwisata'] . '</td>';
+            $html .= '<td>' . $row['Nama_Pariwisata'] . '</td>';
 
-        // Loop untuk kolom kriteria
-        for ($i = 1; $i <= count($row) - 2; $i++) {
-            $kodeKriteria = ($i >= 10) ? 'K' . str_pad($i, 3, '0', STR_PAD_LEFT) : 'K' . str_pad($i, 2, '0', STR_PAD_LEFT);
-            $html .= '<td>' . $row[$kodeKriteria] . '</td>';
+            // Loop untuk kolom kriteria
+            for ($i = 1; $i <= count($row) - 2; $i++) {
+                $kodeKriteria = ($i >= 10) ? 'K' . str_pad($i, 3, '0', STR_PAD_LEFT) : 'K' . str_pad($i, 2, '0', STR_PAD_LEFT);
+                $html .= '<td>' . $row[$kodeKriteria] . '</td>';
 
-            // Menyimpan nilai kriteria dalam array
-            $kriteria[$i][] = $row[$kodeKriteria];
+                // Menyimpan nilai kriteria dalam array
+                $kriteria[$i][] = $row[$kodeKriteria];
+            }
+
+            $html .= '</tr>';
+            $no++;
+        }
+
+        $html .= '<tr style="background-color:khaki;">';
+        $html .= '<td colspan="3">Nilai Tertinggi (MAX)</td>';
+
+        // Loop untuk nilai maksimum kriteria
+        for ($i = 1; $i <= count($kriteria); $i++) {
+            $max = max($kriteria[$i]);
+            $html .= '<td>' . $max . '</td>';
         }
 
         $html .= '</tr>';
-        $no++;
+
+        $html .= '<tr style="background-color:lightblue">';
+        $html .= '<td colspan="3">Nilai Terendah (MIN)</td>';
+
+        // Loop untuk nilai minimum kriteria
+        for ($i = 1; $i <= count($kriteria); $i++) {
+            $min = min($kriteria[$i]);
+            $html .= '<td>' . $min . '</td>';
+        }
+
+        $html .= '</tr>';
+        echo $html;
     }
 
-    $html .= '<tr style="background-color:khaki;">';
-    $html .= '<td colspan="3">Nilai Tertinggi (MAX)</td>';
 
-    // Loop untuk nilai maksimum kriteria
-    for ($i = 1; $i <= count($kriteria); $i++) {
-        $max = max($kriteria[$i]);
-        $html .= '<td>' . $max . '</td>';
-    }
-
-    $html .= '</tr>';
-
-    $html .= '<tr style="background-color:lightblue">';
-    $html .= '<td colspan="3">Nilai Terendah (MIN)</td>';
-
-    // Loop untuk nilai minimum kriteria
-    for ($i = 1; $i <= count($kriteria); $i++) {
-        $min = min($kriteria[$i]);
-        $html .= '<td>' . $min . '</td>';
-    }
-
-    $html .= '</tr>';
-
-    echo $html;
-}
-
-
-
+  //-----------------------------------------------------------------------------------------
+    //TABLE NILAI BOBOT -----------------------------------------------------------------------------------------------
     //GET BOBOT
     function report_bobot_table()
     {
@@ -207,7 +215,8 @@ class Report extends CI_Controller {
        
 
     }
-
+  //-----------------------------------------------------------------------------------------
+    //TABLE NORMALISASI BOBOT -----------------------------------------------------------------------------------------------
     //GET BOBOT NORMALISASI
     function repot_bobot_normalisasi_table()
     {
@@ -229,14 +238,15 @@ class Report extends CI_Controller {
        echo $html;
     }
 
-
+  //-----------------------------------------------------------------------------------------
+      //TABLE UTILITY NILAI -----------------------------------------------------------------------------------------------
       //GET UTILITY
       function get_utility_table()
       {
          $html = '';
       $no    = 1;
-      $result   = $this->smart->get_utility();
-      $get_data = count($this->smart->get_konversi());
+      $result   = $this->report->get_utility();
+      $get_data = count($this->report->get_konversi());
       $kriteria = count($this->smart->get('kriteria'));
       for($i=0; $i<$get_data; $i++)
       {
@@ -255,7 +265,8 @@ class Report extends CI_Controller {
         
       }
       
-  
+    //-----------------------------------------------------------------------------------------
+      //TABLE NILAI AKHIR -----------------------------------------------------------------------------------------------
       //GET NILAI AKHIR (GET End Of Result Proccess SMART METHOD)
       function get_result_table()
       {
@@ -295,6 +306,9 @@ class Report extends CI_Controller {
         echo $html;
       }
 
+
+      //-----------------------------------------------------------------------------------------
+      //TABLE RANK -----------------------------------------------------------------------------------------------
         function get_result_table1()
         {
            $html = '';
@@ -318,7 +332,6 @@ class Report extends CI_Controller {
     
            for($i=0; $i<$get_data; $i++)
            {
-             //if($result['rank'][$i]==5)
                         $html .= '<tr style="background-color: whitesmoke;">';
                         $html .= '<td colspan="2" >'.$no.'.</td>';
                         $html .= '<td colspan="3" >'.$result['nama'][$i].'</td>';
